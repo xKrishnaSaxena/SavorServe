@@ -185,16 +185,18 @@
 import { useState } from "react";
 import { Dialog, DialogPanel } from "@headlessui/react";
 import { Bars3Icon, XMarkIcon } from "@heroicons/react/24/outline";
+import Carousel from "../components/Carousel";
 
 const navigation = [
   { name: "Italian", href: "#" },
   { name: "American", href: "#" },
   { name: "Asian", href: "#" },
   { name: "Mexican", href: "#" },
+  { name: "Chinese", href: "#" },
   { name: "Thai", href: "#" },
   { name: "Vegan", href: "#" },
+  { name: "Non-Veg", href: "#" },
   { name: "Deserts", href: "#" },
-  { name: "Fast Food", href: "#" },
 ];
 
 export default function Example() {
@@ -309,7 +311,7 @@ export default function Example() {
             }}
           />
         </div>
-        <div className="mx-auto max-w-2xl py-32 sm:py-48 lg:py-56">
+        <div className="mx-auto max-w-2xl py-32 sm:py-48 lg:py-28">
           <div className="hidden sm:mb-8 sm:flex sm:justify-center"></div>
           <div className="text-center">
             <h1 className="text-4xl font-bold tracking-tight text-white sm:text-6xl">
@@ -328,9 +330,13 @@ export default function Example() {
                 Order Now
               </a>
             </div>
+            <div className="mt-10">
+              <Carousel />
+            </div>
           </div>
         </div>
       </div>
+
       <Footer />
     </div>
   );
