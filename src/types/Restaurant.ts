@@ -9,7 +9,7 @@ export interface Restaurant {
   status: string;
   timing: string;
   safetyMeasures: string[];
-  menu: string[];
+  menu: menuItem[];
   cuisines: string[];
   knownFor: string[];
   averageCost: string;
@@ -17,4 +17,8 @@ export interface Restaurant {
   moreInfo: string[];
   images: string[];
   menuPhotos: string[];
+}
+export interface menuItem {
+  category: string;
+  dishes: string[];
 }

@@ -8,7 +8,7 @@ interface MenuProps {
 const Menu: React.FC<MenuProps> = ({ restaurant }) => {
   return (
     <>
-      <div className="text-center text-white">
+      <div className="text-center text-white mb-5">
         Photos of Menu by {restaurant.name}
       </div>
       <Carousel images={restaurant.menuPhotos} />

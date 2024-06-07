@@ -1,4 +1,3 @@
-// components/Overview.tsx
 import React from "react";
 import { Restaurant } from "../../types/Restaurant";
 

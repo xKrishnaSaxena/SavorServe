@@ -4,15 +4,15 @@ import { useState } from "react";
 
 export default function Header() {
   const navigation = [
-    { name: "Italian", href: "/homepage" },
-    { name: "American", href: "/homepage" },
-    { name: "Asian", href: "/homepage" },
-    { name: "Mexican", href: "/homepage" },
-    { name: "Chinese", href: "/homepage" },
-    { name: "Thai", href: "/homepage" },
-    { name: "Vegan", href: "/homepage" },
+    { name: "Italian", href: "/1" },
+    { name: "American", href: "/1" },
+    { name: "Asian", href: "/1" },
+    { name: "Mexican", href: "/1" },
+    { name: "Chinese", href: "/1" },
+    { name: "Thai", href: "/1" },
+    { name: "Vegan", href: "/1" },
     { name: "Non-Veg", href: "/1" },
-    { name: "Deserts", href: "/homepage" },
+    { name: "Deserts", href: "/1" },
   ];
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
 
@@ -54,7 +54,10 @@ export default function Header() {
           ))}
         </div>
         <div className="hidden lg:flex lg:flex-1 lg:justify-end">
-          <a href="#" className="text-sm font-semibold leading-6 text-white">
+          <a
+            href="/signup"
+            className="text-sm font-semibold leading-6 text-white"
+          >
             Log in / Sign up<span aria-hidden="true">&rarr;</span>
           </a>
         </div>
@@ -99,7 +102,7 @@ export default function Header() {
               </div>
               <div className="py-6">
                 <a
-                  href="#"
+                  href="/signup"
                   className="-mx-3 block rounded-lg px-3 py-2.5 text-base font-semibold leading-7 text-gray-900 hover:bg-gray-50"
                 >
                   Log in

@@ -1,6 +1,6 @@
 export default function Footer() {
   return (
-    <footer className="bg-gradient-to-tr from-[#ff80b5] to-[#9089fc] text-white p-6">
+    <footer className="bg-gradient-to-tr from-[#ff80b5] to-[#9089fc] text-white p-6 ">
       <div className="container mx-auto text-center">
         <div className="flex flex-col md:flex-row justify-between items-center space-y-4 md:space-y-0">
           <p>
