@@ -16,4 +16,5 @@ export interface Restaurant {
   paymentMethods: string[];
   moreInfo: string[];
   images: string[];
+  menuPhotos: string[];
 }

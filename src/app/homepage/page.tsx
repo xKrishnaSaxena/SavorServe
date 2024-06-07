@@ -188,6 +188,13 @@ import Header from "../../components/ui/Header";
 import Footer from "../../components/ui/Footer";
 
 export default function Example() {
+  const images = [
+    "images/marineroom.jpg",
+    "images/punjab.jpg",
+    "images/sharma.jpg",
+    "images/skybar.jpg",
+    "images/tunday.jpg",
+  ];
   return (
     <div className="bg-white-100">
       <Header />
@@ -253,7 +260,7 @@ export default function Example() {
             </div>
 
             <div className="mt-10">
-              <Carousel />
+              <Carousel images={images} />
             </div>
           </div>
         </div>

@@ -1,4 +1,3 @@
-// src/components/OrderOnline.tsx
 import React, { useState } from "react";
 import { Restaurant } from "@/types/Restaurant";
 

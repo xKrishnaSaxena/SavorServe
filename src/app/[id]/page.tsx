@@ -9,14 +9,13 @@ import Navbar from "../../components/ui/Navbar";
 import Overview from "@/components/restaurant/Overview";
 import Order from "@/components/restaurant/Order";
 import Review from "@/components/restaurant/Reviews";
-import Photos from "@/components/restaurant/Photos";
 import Menu from "@/components/restaurant/Menu";
 
 const RestaurantPage = () => {
   const pathname = usePathname();
   const id = pathname.split("/").pop();
 
-  const sections = ["Overview", "Order Online", "Reviews", "Photos", "Menu"];
+  const sections = ["Overview", "Order Online", "Reviews", "Menu"];
   const [currentSection, setCurrentSection] = useState("Overview");
 
   const restaurant = {
@@ -78,10 +77,13 @@ const RestaurantPage = () => {
       "Table reservation required",
     ],
     images: [
-      "/images/pizza-plaza1.jpg",
-      "/images/pizza-plaza2.jpg",
-      "/images/pizza-plaza3.jpg",
+      "images/marineroom.jpg",
+      "images/punjab.jpg",
+      "images/sharma.jpg",
+      "images/skybar.jpg",
+      "images/tunday.jpg",
     ],
+    menuPhotos: ["images/menu1.jpg", "images/menu2.jpg", "images/menu3.png"],
   };
 
   const renderSection = () => {
@@ -92,10 +94,8 @@ const RestaurantPage = () => {
         return <Order restaurant={restaurant} />;
       case "Reviews":
         return <Review />;
-      case "Photos":
-        return <Photos />;
       case "Menu":
-        return <Menu />;
+        return <Menu restaurant={restaurant} />;
       default:
         return null;
     }
@@ -133,7 +133,7 @@ const RestaurantPage = () => {
               </div>
             </div>
             <div className="mt-10">
-              <Carousel />
+              <Carousel images={restaurant.images} />
             </div>
           </div>
           <Navbar

@@ -1,21 +1,17 @@
-import { useState, useEffect } from "react";
+import React, { useState, useEffect } from "react";
 
-export default function Carousel() {
+interface CarouselProps {
+  images: string[];
+}
+const Carousel: React.FC<CarouselProps> = ({ images }) => {
   const [currentSlide, setCurrentSlide] = useState(0);
-  const slides = [
-    "images/marineroom.jpg",
-    "images/punjab.jpg",
-    "images/sharma.jpg",
-    "images/skybar.jpg",
-    "images/tunday.jpg",
-  ];
 
   const handleNext = () => {
-    setCurrentSlide((prev) => (prev === slides.length - 1 ? 0 : prev + 1));
+    setCurrentSlide((prev) => (prev === images.length - 1 ? 0 : prev + 1));
   };
 
   const handlePrev = () => {
-    setCurrentSlide((prev) => (prev === 0 ? slides.length - 1 : prev - 1));
+    setCurrentSlide((prev) => (prev === 0 ? images.length - 1 : prev - 1));
   };
 
   useEffect(() => {
@@ -30,7 +26,7 @@ export default function Carousel() {
       data-carousel="slide"
     >
       <div className="relative h-56 overflow-hidden rounded-lg md:h-96">
-        {slides.map((slide, index) => (
+        {images.map((slide, index) => (
           <div
             key={index}
             className={`duration-700 ease-in-out absolute inset-0 transition-opacity ${
@@ -48,7 +44,7 @@ export default function Carousel() {
       </div>
 
       <div className="absolute z-30 flex space-x-3 bottom-5 left-1/2 transform -translate-x-1/2 rtl:space-x-reverse">
-        {slides.map((_, index) => (
+        {images.map((_, index) => (
           <button
             key={index}
             type="button"
@@ -115,4 +111,6 @@ export default function Carousel() {
       </button>
     </div>
   );
-}
+};
+
+export default Carousel;
