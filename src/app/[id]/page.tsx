@@ -1,7 +1,5 @@
-// src/app/[id]/page.tsx
 "use client";
-import { useEffect, useState } from "react";
-import { useRouter } from "next/router";
+
 import Header from "../../components/ui/Header";
 import Footer from "../../components/ui/Footer";
 import Carousel from "../../components/ui/Carousel";
@@ -13,6 +11,7 @@ import Menu from "@/components/restaurant/Menu";
 import Sidebar from "@/components/restaurant/Sidebar";
 
 import { Restaurant } from "@/types/Restaurant";
+import { useState } from "react";
 
 type Params = {
   id: string;

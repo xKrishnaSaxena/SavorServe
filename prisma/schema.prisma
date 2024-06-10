@@ -1,0 +1,53 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("POSTGRES_PRISMA_URL") // uses connection pooling
+  directUrl = env("POSTGRES_URL_NON_POOLING") // uses a direct connection
+  relationMode = "prisma"
+}
+
+model Restaurant {
+  id              String     @default(cuid()) @id
+  name            String
+  rating          Float
+  diningRatings   Int
+  deliveryRating  Int
+  deliveryReviews String
+  cuisines        String[]
+  location        String
+  status          String
+  timing          String
+  safetyMeasures  String[]
+  menu            MenuItem[]
+  knownFor        String[]
+  averageCost     String
+  paymentMethods  String[]
+  moreInfo        String[]
+  images          String[]
+  menuPhotos      String[]
+  reviews         Review[]
+}
+
+model MenuItem {
+  id        String     @default(cuid()) @id
+  category  String
+  dishes    String[]
+  restaurantId String  @map("restaurant_id")
+  restaurant   Restaurant @relation(fields: [restaurantId], references: [id])
+}
+
+model Review {
+  id           String     @default(cuid()) @id
+  username     String
+  userReviews  Int
+  userFollowers Int
+  rating       Float
+  type         String
+  time         DateTime
+  content      String?
+  restaurantId String  @map("restaurant_id")
+  restaurant   Restaurant @relation(fields: [restaurantId], references: [id])
+}
