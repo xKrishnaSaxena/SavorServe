@@ -1,8 +1,9 @@
 import React from "react";
 import Link from "next/link";
+import { MenuItem } from "@/types/Restaurant";
 
 interface SidebarProps {
-  menu: { category: string; dishes: string[] }[];
+  menu: MenuItem[];
 }
 
 const Sidebar: React.FC<SidebarProps> = ({ menu }) => {

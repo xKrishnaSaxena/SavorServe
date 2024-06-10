@@ -1,7 +1,7 @@
+// src/app/[id]/page.tsx
 "use client";
-
-import { usePathname } from "next/navigation";
-import { useState } from "react";
+import { useEffect, useState } from "react";
+import { useRouter } from "next/router";
 import Header from "../../components/ui/Header";
 import Footer from "../../components/ui/Footer";
 import Carousel from "../../components/ui/Carousel";
@@ -12,117 +12,22 @@ import Review from "@/components/restaurant/Reviews";
 import Menu from "@/components/restaurant/Menu";
 import Sidebar from "@/components/restaurant/Sidebar";
 
-const RestaurantPage = () => {
-  const pathname = usePathname();
-  const id = pathname.split("/").pop();
+import { Restaurant } from "@/types/Restaurant";
 
-  const sections = ["Overview", "Order Online", "Reviews", "Menu"];
+type Params = {
+  id: string;
+};
+
+const RestaurantPage = ({ params }: { params: Params }) => {
+  const { id } = params;
+  const [restaurant, setRestaurant] = useState<Restaurant | null>(null);
   const [currentSection, setCurrentSection] = useState("Overview");
 
-  const restaurant = {
-    name: "Pizza Plaza",
-    rating: 3.0,
-    diningRatings: 28,
-    deliveryRating: 4.2,
-    deliveryReviews: "37.1K",
-    cuisine: [
-      "Pizza",
-      "Fast Food",
-      "Chinese",
-      "North Indian",
-      "Street Food",
-      "Momos",
-      "Desserts",
-      "Beverages",
-    ],
-    location: "Rajajipuram, Lucknow",
-    status: "Open now",
-    timing: "10am – 11pm (Today)",
-    safetyMeasures: ["Rider Hand Wash", "Daily Temp. Checks"],
-    menu: [
-      {
-        category: "Pizza",
-        dishes: [
-          "Veg Cheese Pizza [7 inches]",
-          "Capsicum Cheese Pizza [7 inches]",
-          "Tomato Cheese Pizza [7 inches]",
-          "Onion Cheese Pizza [7 inches]",
-          "Red onion & mozzarella cheese",
-          "Capsicum Tomato Pizza [7 inches]",
-        ],
-      },
-      {
-        category: "Fried Rice",
-        dishes: [
-          "Veg Cheese Pizza [7 inches]",
-          "Capsicum Cheese Pizza [7 inches]",
-          "Tomato Cheese Pizza [7 inches]",
-          "Onion Cheese Pizza [7 inches]",
-          "Red onion & mozzarella cheese",
-          "Capsicum Tomato Pizza [7 inches]",
-        ],
-      },
-      {
-        category: "Indian",
-        dishes: [
-          "Veg Cheese Pizza [7 inches]",
-          "Capsicum Cheese Pizza [7 inches]",
-          "Tomato Cheese Pizza [7 inches]",
-          "Onion Cheese Pizza [7 inches]",
-          "Red onion & mozzarella cheese",
-          "Capsicum Tomato Pizza [7 inches]",
-        ],
-      },
-      {
-        category: "Chinese",
-        dishes: [
-          "Veg Cheese Pizza [7 inches]",
-          "Capsicum Cheese Pizza [7 inches]",
-          "Tomato Cheese Pizza [7 inches]",
-          "Onion Cheese Pizza [7 inches]",
-          "Red onion & mozzarella cheese",
-          "Capsicum Tomato Pizza [7 inches]",
-        ],
-      },
-    ],
-    cuisines: [
-      "Pizza",
-      "Fast Food",
-      "Chinese",
-      "North Indian",
-      "Street Food",
-      "Momos",
-      "Desserts",
-      "Beverages",
-    ],
-    knownFor: [
-      "Great Recommendations",
-      "Great Ambiance",
-      "Fast Delivery",
-      "Reasonable Prices",
-      "Nice Taste",
-      "Good Taste",
-    ],
-    averageCost: "₹450 for two people (approx.)",
-    paymentMethods: ["Cash and Cards accepted", "Digital payments accepted"],
-    moreInfo: [
-      "Breakfast",
-      "Home Delivery",
-      "Takeaway Available",
-      "Vegetarian Only",
-      "Desserts and Bakes",
-      "Indoor Seating",
-      "Table reservation required",
-    ],
-    images: [
-      "images/marineroom.jpg",
-      "images/punjab.jpg",
-      "images/sharma.jpg",
-      "images/skybar.jpg",
-      "images/tunday.jpg",
-    ],
-    menuPhotos: ["images/menu1.jpg", "images/menu2.jpg", "images/menu3.png"],
-  };
+  if (!restaurant) {
+    return <div>Loading...</div>;
+  }
+
+  const sections = ["Overview", "Order Online", "Reviews", "Menu"];
 
   const renderSection = () => {
     switch (currentSection) {

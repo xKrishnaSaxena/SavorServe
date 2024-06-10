@@ -1,7 +1,8 @@
+import { MenuItem } from "@/types/Restaurant";
 import React from "react";
 
 interface OrderProps {
-  menu: { category: string; dishes: string[] }[];
+  menu: MenuItem[];
 }
 
 const Order: React.FC<OrderProps> = ({ menu }) => {
@@ -13,7 +14,7 @@ const Order: React.FC<OrderProps> = ({ menu }) => {
           <ul>
             {item.dishes.map((dish, dishIndex) => (
               <li key={dishIndex} className="mb-2">
-                {dish}
+                {dish.name}
               </li>
             ))}
           </ul>

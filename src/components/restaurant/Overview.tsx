@@ -10,7 +10,7 @@ const Overview: React.FC<OverviewProps> = ({ restaurant }) => {
     <div className="text-left text-white">
       <p className="mt-6 text-lg leading-8">
         <strong>Cuisines: </strong>
-        {restaurant.cuisine.join(", ")}
+        {restaurant.cuisines.join(", ")}
       </p>
       <p className="mt-6 text-lg leading-8">
         <strong>Location: </strong>
