@@ -9,9 +9,8 @@ import Order from "@/components/restaurant/Order";
 import Review from "@/components/restaurant/Reviews";
 import Menu from "@/components/restaurant/Menu";
 import Sidebar from "@/components/restaurant/Sidebar";
-
 import { Restaurant } from "@/types/Restaurant";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 
 type Params = {
   id: string;
@@ -21,152 +20,35 @@ const RestaurantPage = ({ params }: { params: Params }) => {
   const { id } = params;
 
   const [currentSection, setCurrentSection] = useState("Overview");
+  const [restaurant, setRestaurant] = useState<Restaurant | null>(null);
+  const [loading, setLoading] = useState(true);
 
-  const restaurant = {
-    name: "Pizza Plaza",
-    rating: 3.0,
-    diningRatings: 28,
-    deliveryRating: 4.2,
-    deliveryReviews: "37.1K",
-    cuisines: [
-      "Pizza",
-      "Fast Food",
-      "Chinese",
-      "North Indian",
-      "Street Food",
-      "Momos",
-      "Desserts",
-      "Beverages",
-    ],
-    location: "Rajajipuram, Lucknow",
-    status: "Open now",
-    timing: "10am – 11pm (Today)",
-    safetyMeasures: ["Rider Hand Wash", "Daily Temp. Checks"],
-    menu: [
-      {
-        category: "Pizza",
-        dishes: [
-          "Veg Cheese Pizza [7 inches]",
-          "Capsicum Cheese Pizza [7 inches]",
-          "Tomato Cheese Pizza [7 inches]",
-          "Onion Cheese Pizza [7 inches]",
-          "Red onion & mozzarella cheese",
-          "Capsicum Tomato Pizza [7 inches]",
-        ],
-      },
-      {
-        category: "Fried Rice",
-        dishes: [
-          "Veg Cheese Pizza [7 inches]",
-          "Capsicum Cheese Pizza [7 inches]",
-          "Tomato Cheese Pizza [7 inches]",
-          "Onion Cheese Pizza [7 inches]",
-          "Red onion & mozzarella cheese",
-          "Capsicum Tomato Pizza [7 inches]",
-        ],
-      },
-      {
-        category: "Indian",
-        dishes: [
-          "Veg Cheese Pizza [7 inches]",
-          "Capsicum Cheese Pizza [7 inches]",
-          "Tomato Cheese Pizza [7 inches]",
-          "Onion Cheese Pizza [7 inches]",
-          "Red onion & mozzarella cheese",
-          "Capsicum Tomato Pizza [7 inches]",
-        ],
-      },
-      {
-        category: "Chinese",
-        dishes: [
-          "Veg Cheese Pizza [7 inches]",
-          "Capsicum Cheese Pizza [7 inches]",
-          "Tomato Cheese Pizza [7 inches]",
-          "Onion Cheese Pizza [7 inches]",
-          "Red onion & mozzarella cheese",
-          "Capsicum Tomato Pizza [7 inches]",
-        ],
-      },
-    ],
-    knownFor: [
-      "Great Recommendations",
-      "Great Ambiance",
-      "Fast Delivery",
-      "Reasonable Prices",
-      "Nice Taste",
-      "Good Taste",
-    ],
-    averageCost: "₹450 for two people (approx.)",
-    paymentMethods: ["Cash and Cards accepted", "Digital payments accepted"],
-    moreInfo: [
-      "Breakfast",
-      "Home Delivery",
-      "Takeaway Available",
-      "Vegetarian Only",
-      "Desserts and Bakes",
-      "Indoor Seating",
-      "Table reservation required",
-    ],
-    images: [
-      "images/marineroom.jpg",
-      "images/punjab.jpg",
-      "images/sharma.jpg",
-      "images/skybar.jpg",
-      "images/tunday.jpg",
-    ],
-    menuPhotos: ["images/menu1.jpg", "images/menu2.jpg", "images/menu3.png"],
-    reviews: [
-      {
-        username: "Hasan Ahmad",
-        userReviews: 5,
-        userFollowers: 0,
-        rating: 5,
-        type: "DELIVERY",
-        time: "19 hours ago",
-        content: "",
-      },
-      {
-        username: "I Like Spicy And Crunchy",
-        userReviews: 2,
-        userFollowers: 0,
-        rating: 5,
-        type: "DELIVERY",
-        time: "yesterday",
-        content: "",
-      },
-      {
-        username: "Swati Thakur",
-        userReviews: 4,
-        userFollowers: 0,
-        rating: 1,
-        type: "DELIVERY",
-        time: "3 days ago",
-        content:
-          "I had ordered cheese paneer momos and they have delivered only paneer momos and taste of tandoori momos was pathetic",
-      },
-      {
-        username: "Mr Ayush",
-        userReviews: 3,
-        userFollowers: 0,
-        rating: 5,
-        type: "DELIVERY",
-        time: "4 days ago",
-        content: "",
-      },
-      {
-        username: "Prapti Mishra",
-        userReviews: 5,
-        userFollowers: 0,
-        rating: 5,
-        type: "DELIVERY",
-        time: "4 days ago",
-        content: "",
-      },
-    ],
-  };
+  useEffect(() => {
+    const fetchRestaurant = async () => {
+      try {
+        const res = await fetch(`/api/restaurant/${id}`);
+        if (!res.ok) {
+          throw new Error("Failed to fetch restaurant");
+        }
+        const data = await res.json();
+        console.log(data);
+        setRestaurant(data);
+        setLoading(false);
+      } catch (error) {
+        console.error(error);
+        setLoading(false);
+      }
+    };
+
+    fetchRestaurant();
+  }, [id]);
+
+  if (loading) {
+    return <div>Loading...</div>;
+  }
 
   if (!restaurant) {
-    return <div>Loading...</div>;
+    return <div>Restaurant not found</div>;
   }
 
   const sections = ["Overview", "Order Online", "Reviews", "Menu"];
