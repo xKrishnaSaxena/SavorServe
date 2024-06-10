@@ -1,34 +1,35 @@
-// src/types/restaurant.ts
-
 export interface Restaurant {
-  id: number;
   name: string;
   rating: number;
   diningRatings: number;
   deliveryRating: number;
   deliveryReviews: string;
+  cuisines: string[];
   location: string;
   status: string;
   timing: string;
   safetyMeasures: string[];
-  cuisines: { name: string }[];
+  menu: MenuItem[];
   knownFor: string[];
   averageCost: string;
   paymentMethods: string[];
   moreInfo: string[];
   images: string[];
   menuPhotos: string[];
-  menu: MenuItem[];
+  reviews: Review[];
 }
 
 export interface MenuItem {
-  id: number;
   category: string;
-  dishes: Dish[];
+  dishes: string[];
 }
 
-export interface Dish {
-  id: number;
-  name: string;
-  menuCategoryId: number;
+export interface Review {
+  username: string;
+  userReviews: number;
+  userFollowers: number;
+  rating: number;
+  type: string;
+  time: string;
+  content?: string;
 }

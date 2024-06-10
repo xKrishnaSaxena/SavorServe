@@ -1,65 +1,10 @@
+import { Review } from "@/types/Restaurant";
 import React from "react";
 
-interface Review {
-  username: string;
-  userReviews: number;
-  userFollowers: number;
-  rating: number;
-  type: string;
-  time: string;
-  content: string;
+interface ReviewsProps {
+  reviews: Review[];
 }
-
-const reviews: Review[] = [
-  {
-    username: "Hasan Ahmad",
-    userReviews: 5,
-    userFollowers: 0,
-    rating: 5,
-    type: "DELIVERY",
-    time: "19 hours ago",
-    content: "",
-  },
-  {
-    username: "I Like Spicy And Crunchy",
-    userReviews: 2,
-    userFollowers: 0,
-    rating: 5,
-    type: "DELIVERY",
-    time: "yesterday",
-    content: "",
-  },
-  {
-    username: "Swati Thakur",
-    userReviews: 4,
-    userFollowers: 0,
-    rating: 1,
-    type: "DELIVERY",
-    time: "3 days ago",
-    content:
-      "I had ordered cheese paneer momos and they have delivered only paneer momos and taste of tandoori momos was pathetic",
-  },
-  {
-    username: "Mr Ayush",
-    userReviews: 3,
-    userFollowers: 0,
-    rating: 5,
-    type: "DELIVERY",
-    time: "4 days ago",
-    content: "",
-  },
-  {
-    username: "Prapti Mishra",
-    userReviews: 5,
-    userFollowers: 0,
-    rating: 5,
-    type: "DELIVERY",
-    time: "4 days ago",
-    content: "",
-  },
-];
-
-const Reviews: React.FC = () => {
+const Reviews: React.FC<ReviewsProps> = ({ reviews }) => {
   return (
     <div className="p-4">
       <h2 className="text-2xl font-bold mb-4">Pizza Plaza Reviews</h2>

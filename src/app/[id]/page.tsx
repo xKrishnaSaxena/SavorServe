@@ -20,8 +20,151 @@ type Params = {
 
 const RestaurantPage = ({ params }: { params: Params }) => {
   const { id } = params;
-  const [restaurant, setRestaurant] = useState<Restaurant | null>(null);
+
   const [currentSection, setCurrentSection] = useState("Overview");
+
+  const restaurant = {
+    name: "Pizza Plaza",
+    rating: 3.0,
+    diningRatings: 28,
+    deliveryRating: 4.2,
+    deliveryReviews: "37.1K",
+    cuisines: [
+      "Pizza",
+      "Fast Food",
+      "Chinese",
+      "North Indian",
+      "Street Food",
+      "Momos",
+      "Desserts",
+      "Beverages",
+    ],
+    location: "Rajajipuram, Lucknow",
+    status: "Open now",
+    timing: "10am – 11pm (Today)",
+    safetyMeasures: ["Rider Hand Wash", "Daily Temp. Checks"],
+    menu: [
+      {
+        category: "Pizza",
+        dishes: [
+          "Veg Cheese Pizza [7 inches]",
+          "Capsicum Cheese Pizza [7 inches]",
+          "Tomato Cheese Pizza [7 inches]",
+          "Onion Cheese Pizza [7 inches]",
+          "Red onion & mozzarella cheese",
+          "Capsicum Tomato Pizza [7 inches]",
+        ],
+      },
+      {
+        category: "Fried Rice",
+        dishes: [
+          "Veg Cheese Pizza [7 inches]",
+          "Capsicum Cheese Pizza [7 inches]",
+          "Tomato Cheese Pizza [7 inches]",
+          "Onion Cheese Pizza [7 inches]",
+          "Red onion & mozzarella cheese",
+          "Capsicum Tomato Pizza [7 inches]",
+        ],
+      },
+      {
+        category: "Indian",
+        dishes: [
+          "Veg Cheese Pizza [7 inches]",
+          "Capsicum Cheese Pizza [7 inches]",
+          "Tomato Cheese Pizza [7 inches]",
+          "Onion Cheese Pizza [7 inches]",
+          "Red onion & mozzarella cheese",
+          "Capsicum Tomato Pizza [7 inches]",
+        ],
+      },
+      {
+        category: "Chinese",
+        dishes: [
+          "Veg Cheese Pizza [7 inches]",
+          "Capsicum Cheese Pizza [7 inches]",
+          "Tomato Cheese Pizza [7 inches]",
+          "Onion Cheese Pizza [7 inches]",
+          "Red onion & mozzarella cheese",
+          "Capsicum Tomato Pizza [7 inches]",
+        ],
+      },
+    ],
+    knownFor: [
+      "Great Recommendations",
+      "Great Ambiance",
+      "Fast Delivery",
+      "Reasonable Prices",
+      "Nice Taste",
+      "Good Taste",
+    ],
+    averageCost: "₹450 for two people (approx.)",
+    paymentMethods: ["Cash and Cards accepted", "Digital payments accepted"],
+    moreInfo: [
+      "Breakfast",
+      "Home Delivery",
+      "Takeaway Available",
+      "Vegetarian Only",
+      "Desserts and Bakes",
+      "Indoor Seating",
+      "Table reservation required",
+    ],
+    images: [
+      "images/marineroom.jpg",
+      "images/punjab.jpg",
+      "images/sharma.jpg",
+      "images/skybar.jpg",
+      "images/tunday.jpg",
+    ],
+    menuPhotos: ["images/menu1.jpg", "images/menu2.jpg", "images/menu3.png"],
+    reviews: [
+      {
+        username: "Hasan Ahmad",
+        userReviews: 5,
+        userFollowers: 0,
+        rating: 5,
+        type: "DELIVERY",
+        time: "19 hours ago",
+        content: "",
+      },
+      {
+        username: "I Like Spicy And Crunchy",
+        userReviews: 2,
+        userFollowers: 0,
+        rating: 5,
+        type: "DELIVERY",
+        time: "yesterday",
+        content: "",
+      },
+      {
+        username: "Swati Thakur",
+        userReviews: 4,
+        userFollowers: 0,
+        rating: 1,
+        type: "DELIVERY",
+        time: "3 days ago",
+        content:
+          "I had ordered cheese paneer momos and they have delivered only paneer momos and taste of tandoori momos was pathetic",
+      },
+      {
+        username: "Mr Ayush",
+        userReviews: 3,
+        userFollowers: 0,
+        rating: 5,
+        type: "DELIVERY",
+        time: "4 days ago",
+        content: "",
+      },
+      {
+        username: "Prapti Mishra",
+        userReviews: 5,
+        userFollowers: 0,
+        rating: 5,
+        type: "DELIVERY",
+        time: "4 days ago",
+        content: "",
+      },
+    ],
+  };
 
   if (!restaurant) {
     return <div>Loading...</div>;
@@ -41,7 +184,7 @@ const RestaurantPage = ({ params }: { params: Params }) => {
           </div>
         );
       case "Reviews":
-        return <Review />;
+        return <Review reviews={restaurant.reviews} />;
       case "Menu":
         return <Menu restaurant={restaurant} />;
       default:
@@ -76,7 +219,7 @@ const RestaurantPage = ({ params }: { params: Params }) => {
                 Ratings
               </div>
               <div className="text-lg leading-8 text-white">
-                {restaurant.deliveryRating} ★ | {restaurant.deliveryReviews}{" "}
+                {restaurant.deliveryRating} ★ | {restaurant.deliveryReviews}
                 Delivery Ratings
               </div>
             </div>

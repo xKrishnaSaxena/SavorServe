@@ -14,7 +14,7 @@ const Order: React.FC<OrderProps> = ({ menu }) => {
           <ul>
             {item.dishes.map((dish, dishIndex) => (
               <li key={dishIndex} className="mb-2">
-                {dish.name}
+                {dish}
               </li>
             ))}
           </ul>
