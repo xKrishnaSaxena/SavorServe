@@ -8,10 +8,13 @@ export async function GET(
   const { id } = params;
   const restaurant = await prisma.restaurant.findUnique({
     where: { id: id },
+    include: {
+      menu: true,
+      reviews: true,
+    },
   });
 
   if (restaurant) {
-    console.log(restaurant);
     return NextResponse.json(restaurant);
   } else {
     return NextResponse.json(
