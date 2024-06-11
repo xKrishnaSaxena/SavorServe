@@ -11,7 +11,6 @@ import Menu from "@/components/restaurant/Menu";
 import Sidebar from "@/components/restaurant/Sidebar";
 import { Restaurant } from "@/types/Restaurant";
 import { useState, useEffect } from "react";
-import { clear } from "console";
 
 type Params = {
   id: string;

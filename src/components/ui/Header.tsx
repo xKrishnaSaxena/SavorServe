@@ -4,15 +4,15 @@ import { useState } from "react";
 
 export default function Header() {
   const navigation = [
-    { name: "Italian", href: "/1" },
-    { name: "American", href: "/1" },
-    { name: "Asian", href: "/1" },
-    { name: "Mexican", href: "/1" },
-    { name: "Chinese", href: "/1" },
-    { name: "Thai", href: "/1" },
-    { name: "Vegan", href: "/1" },
-    { name: "Non-Veg", href: "/1" },
-    { name: "Deserts", href: "/1" },
+    { name: "Italian", href: "/clx9k6420000010qdi7ou1njr" },
+    { name: "American", href: "/clx9k6420000010qdi7ou1njr" },
+    { name: "Asian", href: "/clx9k6420000010qdi7ou1njr" },
+    { name: "Mexican", href: "/clx9k6420000010qdi7ou1njr" },
+    { name: "Chinese", href: "/clx9k6420000010qdi7ou1njr" },
+    { name: "Thai", href: "/clx9k6420000010qdi7ou1njr" },
+    { name: "Vegan", href: "/clx9k6420000010qdi7ou1njr" },
+    { name: "Non-Veg", href: "/clxah3zxf0000ga6bgyscv8u4" },
+    { name: "Deserts", href: "/clx9k6420000010qdi7ou1njr" },
   ];
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
 
