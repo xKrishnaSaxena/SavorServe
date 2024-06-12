@@ -1,13 +1,36 @@
-import { Review } from "@/types/Restaurant";
 import React from "react";
+import { Review } from "@/types/Restaurant";
+import Link from "next/link";
 
 interface ReviewsProps {
   reviews: Review[];
+  id: string; // Assuming id is a string
 }
-const Reviews: React.FC<ReviewsProps> = ({ reviews }) => {
+
+const Reviews: React.FC<ReviewsProps> = ({ reviews, id }) => {
+  // Function to format ISO 8601 time string to a readable format
+  const formatTime = (isoTimeString: string) => {
+    // Create a Date object from the ISO 8601 string
+    const date = new Date(isoTimeString);
+
+    // Format the date into a readable format
+    const options: Intl.DateTimeFormatOptions = {
+      year: "numeric",
+      month: "long",
+      day: "numeric",
+      hour: "numeric",
+      minute: "numeric",
+      second: "numeric",
+      hour12: true,
+      timeZoneName: "short",
+    };
+
+    return date.toLocaleString("en-US", options);
+  };
+
   return (
     <div className="p-4">
-      <h2 className="text-2xl font-bold mb-4">Pizza Plaza Reviews</h2>
+      <h2 className="text-2xl font-bold mb-4">Reviews</h2>
       {reviews.map((review, index) => (
         <div key={index} className="border-b pb-4 mb-4">
           <div className="flex items-center mb-2">
@@ -23,7 +46,10 @@ const Reviews: React.FC<ReviewsProps> = ({ reviews }) => {
               {review.rating}
             </span>
             <span className="text-sm text-gray-500">{review.type}</span>
-            <span className="text-sm text-gray-500">{review.time}</span>
+            {/* Format time using the formatTime function */}
+            <span className="text-sm text-gray-500">
+              {formatTime(review.time)}
+            </span>
           </div>
           <p className="mb-2">{review.content}</p>
           <div className="flex text-blue-500 text-sm">
@@ -33,6 +59,13 @@ const Reviews: React.FC<ReviewsProps> = ({ reviews }) => {
           </div>
         </div>
       ))}
+      <div className="flex justify-center mt-6">
+        <Link href={`/${id}/addReview`}>
+          <button className="bg-indigo-600 text-white py-2 px-4 rounded-md hover:bg-indigo-700">
+            Add Review
+          </button>
+        </Link>
+      </div>
     </div>
   );
 };
