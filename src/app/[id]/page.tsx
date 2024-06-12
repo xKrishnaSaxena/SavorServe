@@ -11,9 +11,10 @@ import Menu from "@/components/restaurant/Menu";
 import Sidebar from "@/components/restaurant/Sidebar";
 import { Restaurant } from "@/types/Restaurant";
 import { useState, useEffect } from "react";
+import Spinner from "@/components/ui/Spinner";
 
 type Params = {
-  id: string;
+  id: String;
 };
 
 const RestaurantPage = ({ params }: { params: Params }) => {
@@ -44,7 +45,7 @@ const RestaurantPage = ({ params }: { params: Params }) => {
   }, [id]);
 
   if (loading) {
-    return <div>Loading...</div>;
+    return <Spinner />;
   }
 
   if (!restaurant) {

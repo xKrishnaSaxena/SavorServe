@@ -11,7 +11,7 @@ export default function Header() {
     { name: "Chinese", href: "/clx9k6420000010qdi7ou1njr" },
     { name: "Thai", href: "/clx9k6420000010qdi7ou1njr" },
     { name: "Vegan", href: "/clx9k6420000010qdi7ou1njr" },
-    { name: "Non-Veg", href: "/clxah3zxf0000ga6bgyscv8u4" },
+    { name: "Non-Veg", href: "/1" },
     { name: "Deserts", href: "/clx9k6420000010qdi7ou1njr" },
   ];
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);

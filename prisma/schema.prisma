@@ -10,7 +10,7 @@ datasource db {
 }
 
 model Restaurant {
-  id              String     @default(cuid()) @id
+  id              Int     @id @default(autoincrement())
   name            String
   rating          Float
   diningRatings   Int
@@ -32,15 +32,15 @@ model Restaurant {
 }
 
 model MenuItem {
-  id        String     @default(cuid()) @id
+  id        Int     @id @default(autoincrement())
   category  String
   dishes    String[]
-  restaurantId String  @map("restaurant_id")
+  restaurantId Int  @map("restaurant_id")
   restaurant   Restaurant @relation(fields: [restaurantId], references: [id])
 }
 
 model Review {
-  id           String     @default(cuid()) @id
+  id           Int   @id @default(autoincrement())
   username     String
   userReviews  Int
   userFollowers Int
@@ -48,6 +48,6 @@ model Review {
   type         String
   time         DateTime
   content      String?
-  restaurantId String  @map("restaurant_id")
+  restaurantId Int  @map("restaurant_id")
   restaurant   Restaurant @relation(fields: [restaurantId], references: [id])
 }
