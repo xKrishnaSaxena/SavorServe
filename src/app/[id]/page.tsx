@@ -12,6 +12,7 @@ import Sidebar from "@/components/restaurant/Sidebar";
 import { Restaurant } from "@/types/Restaurant";
 import { useState, useEffect } from "react";
 import Spinner from "@/components/ui/Spinner";
+import Link from "next/link"; // Import Link from next/link
 
 type Params = {
   id: String;
@@ -52,7 +53,7 @@ const RestaurantPage = ({ params }: { params: Params }) => {
     return <div>Restaurant not found</div>;
   }
 
-  const sections = ["Overview", "Order Online", "Reviews", "Menu"];
+  const sections = ["Overview", "Order Online", "Reviews", "Menu", "Add Menu"]; // Add "Add Menu" section
 
   const renderSection = () => {
     switch (currentSection) {
@@ -69,6 +70,16 @@ const RestaurantPage = ({ params }: { params: Params }) => {
         return <Review reviews={restaurant.reviews} />;
       case "Menu":
         return <Menu restaurant={restaurant} />;
+      case "Add Menu": // Handle "Add Menu" section
+        return (
+          <div className="flex justify-center mt-6">
+            <Link href={`/${id}/addMenu`}>
+              <button className="bg-indigo-600 text-white py-2 px-4 rounded-md hover:bg-indigo-700">
+                Go to Add Menu Page
+              </button>
+            </Link>
+          </div>
+        );
       default:
         return null;
     }

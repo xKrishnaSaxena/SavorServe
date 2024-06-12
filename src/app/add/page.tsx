@@ -3,7 +3,6 @@
 import Header from "../../components/ui/Header";
 import Footer from "../../components/ui/Footer";
 import React, { useState } from "react";
-import { MenuItem } from "@/types/Restaurant";
 
 export default function AddRestaurant() {
   const [restaurant, setRestaurant] = useState({
@@ -30,9 +29,6 @@ export default function AddRestaurant() {
     ],
     menuPhotos: ["images/menu1.jpg", "images/menu2.jpg", "images/menu3.png"],
   });
-  const [menu, setMenu] = useState([{ category: "", dishes: [] }]);
-
-  const [categories, setCategories] = useState<MenuItem[]>([]);
 
   const handleChange = (e: any) => {
     const { name, value } = e.target;
@@ -40,51 +36,6 @@ export default function AddRestaurant() {
       ...prev,
       [name]: value,
     }));
-  };
-
-  const handleMenuChange = (
-    e: any,
-    categoryIndex: number,
-    dishIndex: number
-  ) => {
-    const { value } = e.target;
-    const newCategories = [...categories];
-    newCategories[categoryIndex].dishes[dishIndex] = value;
-    setCategories(newCategories);
-  };
-
-  const handleAddDish = (categoryIndex: number) => {
-    const newCategories = [...categories];
-    newCategories[categoryIndex].dishes.push("");
-    setCategories(newCategories);
-  };
-
-  const handleRemoveLastDish = (categoryIndex: number) => {
-    const newCategories = [...categories];
-    if (newCategories[categoryIndex].dishes.length > 1) {
-      newCategories[categoryIndex].dishes.pop();
-      setCategories(newCategories);
-    }
-  };
-
-  const handleCategoryChange = (e: any, index: number) => {
-    const { name, value } = e.target;
-    const newCategories = [...categories];
-    newCategories[index] = { ...newCategories[index], [name]: value };
-    setCategories(newCategories);
-  };
-
-  const handleAddCategory = () => {
-    setCategories((prev) => [...prev, { category: "", dishes: [""] }]);
-  };
-
-  const handleCategorySubmit = (e: React.SyntheticEvent, index: number) => {
-    e.preventDefault();
-    // const newMenuItem = categories[index];
-    // setRestaurant((prev) => ({
-    //   ...prev,
-    //   menu: [...prev.menu, newMenuItem],
-    // }));
   };
 
   const handleSubmit = async (e: React.SyntheticEvent) => {
@@ -301,79 +252,6 @@ export default function AddRestaurant() {
                 Submit Restaurant
               </button>
             </form>
-            <div className="space-y-4 text-black w-1/2">
-              {categories.map((category, categoryIndex) => (
-                <form
-                  key={categoryIndex}
-                  className="space-y-4"
-                  onSubmit={(e) => handleCategorySubmit(e, categoryIndex)}
-                >
-                  <div>
-                    <label
-                      htmlFor={`category-${categoryIndex}`}
-                      className="block text-sm font-medium text-white"
-                    >
-                      Category
-                    </label>
-                    <input
-                      type="text"
-                      id={`category-${categoryIndex}`}
-                      name="category"
-                      value={category.category}
-                      onChange={(e) => handleCategoryChange(e, categoryIndex)}
-                      className="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
-                    />
-                  </div>
-                  {category.dishes.map((dish, dishIndex) => (
-                    <div key={dishIndex}>
-                      <label
-                        htmlFor={`dish-${categoryIndex}-${dishIndex}`}
-                        className="block text-sm font-medium text-white"
-                      >
-                        Dish
-                      </label>
-                      <input
-                        type="text"
-                        id={`dish-${categoryIndex}-${dishIndex}`}
-                        name={`dish-${categoryIndex}-${dishIndex}`}
-                        value={dish}
-                        onChange={(e) =>
-                          handleMenuChange(e, categoryIndex, dishIndex)
-                        }
-                        className="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
-                      />
-                    </div>
-                  ))}
-                  <button
-                    type="button"
-                    onClick={() => handleAddDish(categoryIndex)}
-                    className="w-full bg-gray-500 text-white py-2 px-4 rounded-md hover:bg-gray-600"
-                  >
-                    Add Dish
-                  </button>
-                  <button
-                    type="button"
-                    onClick={() => handleRemoveLastDish(categoryIndex)}
-                    className="w-full bg-red-500 text-white py-2 px-4 rounded-md hover:bg-red-600"
-                  >
-                    Remove Last Dish
-                  </button>
-                  <button
-                    type="submit"
-                    className="w-full bg-indigo-600 text-white py-2 px-4 rounded-md hover:bg-indigo-700"
-                  >
-                    Submit Category
-                  </button>
-                </form>
-              ))}
-              <button
-                type="button"
-                onClick={handleAddCategory}
-                className="w-full bg-gray-500 text-white py-2 px-4 rounded-md hover:bg-gray-600"
-              >
-                Add Category
-              </button>
-            </div>
           </div>
         </div>
       </div>
