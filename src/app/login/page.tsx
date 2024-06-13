@@ -3,8 +3,41 @@
 import Header from "../../components/ui/Header";
 import Footer from "../../components/ui/Footer";
 import Link from "next/link";
+import { useState } from "react";
+import { signIn } from "next-auth/react";
+import { useRouter } from "next/navigation";
 
 export default function Login() {
+  const router = useRouter();
+  const [error, setError] = useState("");
+  const [user, setUser] = useState({
+    email: "",
+    password: "",
+  });
+
+  const handleChange = (e: any) => {
+    const { name, value } = e.target;
+    setUser((prev) => ({
+      ...prev,
+      [name]: value,
+    }));
+  };
+  const handleSubmit = async (e: React.SyntheticEvent) => {
+    e.preventDefault();
+    setError(""); // Reset error state
+
+    const signInResponse = await signIn("credentials", {
+      redirect: false,
+      email: user.email,
+      password: user.password,
+    });
+
+    if (signInResponse?.error) {
+      setError(signInResponse.error);
+    } else {
+      router.push("/homepage");
+    }
+  };
   return (
     <div className="bg-white-100 flex flex-col min-h-screen">
       <Header />
@@ -23,7 +56,7 @@ export default function Login() {
         </div>
         <div className="mx-auto max-w-md py-8 mt-32">
           <h2 className="text-2xl font-bold text-center mb-6">Login</h2>
-          <form className="space-y-4 text-black">
+          <form className="space-y-4 text-black" onSubmit={handleSubmit}>
             <div>
               <label
                 htmlFor="email"
@@ -35,6 +68,8 @@ export default function Login() {
                 type="email"
                 id="email"
                 name="email"
+                value={user.email}
+                onChange={handleChange}
                 className="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
               />
             </div>
@@ -49,6 +84,8 @@ export default function Login() {
                 type="password"
                 id="password"
                 name="password"
+                value={user.password}
+                onChange={handleChange}
                 className="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
               />
             </div>

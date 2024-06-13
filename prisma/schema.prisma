@@ -32,15 +32,27 @@ model Restaurant {
 }
 
 model MenuItem {
-  id        Int     @id @default(autoincrement())
-  category  String
-  dishes    String[]
-  restaurantId Int  @map("restaurant_id")
+  id           Int        @id @default(autoincrement())
+  category     String
+  dishes       String[]
+  restaurantId Int        @map("restaurant_id")
   restaurant   Restaurant @relation(fields: [restaurantId], references: [id])
 }
 
+model User {
+  id           Int        @id @default(autoincrement())
+  email        String     @unique
+  name         String?
+  username     String     @unique
+  password     String
+  userReviews  Int        @default(0)
+  userFollowers Int       @default(0)
+  reviews      Review[]
+}
+
+
 model Review {
-  id           Int   @id @default(autoincrement())
+  id           Int        @id @default(autoincrement())
   username     String
   userReviews  Int
   userFollowers Int
@@ -48,6 +60,9 @@ model Review {
   type         String
   time         DateTime
   content      String?
-  restaurantId Int  @map("restaurant_id")
+  restaurantId Int        @map("restaurant_id")
   restaurant   Restaurant @relation(fields: [restaurantId], references: [id])
+  userId       Int        @map("user_id")
+  user         User       @relation(fields: [userId], references: [id])
 }
+

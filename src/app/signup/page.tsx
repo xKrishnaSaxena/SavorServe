@@ -3,8 +3,40 @@
 import Header from "../../components/ui/Header";
 import Footer from "../../components/ui/Footer";
 import Link from "next/link";
+import { useState } from "react";
 
 export default function Example() {
+  const [user, setUser] = useState({
+    name: "",
+    username: "",
+    email: "",
+    password: "",
+  });
+
+  const handleChange = (e: any) => {
+    const { name, value } = e.target;
+    setUser((prev) => ({
+      ...prev,
+      [name]: value,
+    }));
+  };
+  const handleSubmit = async (e: React.SyntheticEvent) => {
+    e.preventDefault();
+    console.log(user);
+    try {
+      const response = await fetch("/api/user", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(user),
+      });
+      const data = await response.json();
+      console.log(data);
+    } catch (error) {
+      console.log(error);
+    }
+  };
   return (
     <div className="bg-white-100 flex flex-col min-h-screen">
       <Header />
@@ -23,7 +55,7 @@ export default function Example() {
         </div>
         <div className="mx-auto max-w-md py-8 mt-32">
           <h2 className="text-2xl font-bold text-center mb-6">Sign Up</h2>
-          <form className="space-y-4 text-black">
+          <form className="space-y-4 text-black" onSubmit={handleSubmit}>
             <div>
               <label
                 htmlFor="name"
@@ -35,6 +67,24 @@ export default function Example() {
                 type="text"
                 id="name"
                 name="name"
+                value={user.name}
+                onChange={handleChange}
+                className="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
+              />
+            </div>
+            <div>
+              <label
+                htmlFor="username"
+                className="block text-sm font-medium text-white"
+              >
+                Username
+              </label>
+              <input
+                type="text"
+                id="username"
+                name="username"
+                value={user.username}
+                onChange={handleChange}
                 className="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
               />
             </div>
@@ -49,6 +99,8 @@ export default function Example() {
                 type="email"
                 id="email"
                 name="email"
+                value={user.email}
+                onChange={handleChange}
                 className="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
               />
             </div>
@@ -63,6 +115,8 @@ export default function Example() {
                 type="password"
                 id="password"
                 name="password"
+                value={user.password}
+                onChange={handleChange}
                 className="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
               />
             </div>
