@@ -5,8 +5,9 @@ export async function POST(req: NextRequest) {
   try {
     const data = await req.json();
 
-    const newMenu = await prisma.review.create({
+    const newReview = await prisma.review.create({
       data: {
+        userId: data.userId,
         username: data.username,
         userReviews: data.userReviews,
         userFollowers: data.userFollowers,
@@ -17,7 +18,7 @@ export async function POST(req: NextRequest) {
         restaurantId: data.restaurantId,
       },
     });
-    return NextResponse.json({ newMenu });
+    return NextResponse.json({ newReview });
   } catch (error) {
     console.log(error);
   }

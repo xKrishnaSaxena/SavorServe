@@ -5,8 +5,11 @@ import Footer from "../../components/ui/Footer";
 import Link from "next/link";
 import { useState } from "react";
 import Provider from "@/components/ui/Provider";
+import { useRouter } from "next/navigation";
+import { signIn } from "next-auth/react";
 
 export default function Example() {
+  const router = useRouter();
   const [user, setUser] = useState({
     name: "",
     username: "",
@@ -21,6 +24,21 @@ export default function Example() {
       [name]: value,
     }));
   };
+  const handleSignIn = async (e: React.SyntheticEvent) => {
+    e.preventDefault();
+
+    const signInResponse = await signIn("credentials", {
+      redirect: false,
+      email: user.email,
+      password: user.password,
+    });
+
+    if (signInResponse?.error) {
+      console.log(signInResponse.error);
+    } else {
+      router.push("/homepage");
+    }
+  };
   const handleSubmit = async (e: React.SyntheticEvent) => {
     e.preventDefault();
     console.log(user);
@@ -34,6 +52,7 @@ export default function Example() {
       });
       const data = await response.json();
       console.log(data);
+      handleSignIn(e);
     } catch (error) {
       console.log(error);
     }

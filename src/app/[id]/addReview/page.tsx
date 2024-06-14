@@ -3,8 +3,8 @@
 import { useState } from "react";
 import Header from "@/components/ui/Header";
 import Footer from "@/components/ui/Footer";
-import { Review } from "@/types/Restaurant";
 import Provider from "@/components/ui/Provider";
+import { useSession } from "next-auth/react";
 
 type Params = {
   id: string;
@@ -12,9 +12,17 @@ type Params = {
 
 export default function Page({ params }: { params: Params }) {
   const { id } = params;
-
+  const { data: session } = useSession();
+  let username = "";
+  if (session?.user?.username) {
+    username = session?.user.username;
+  }
+  let userId = "";
+  if (session?.user?.id) {
+    userId = session?.user?.id;
+  }
   const [review, setReview] = useState({
-    username: "",
+    username: username,
     userReviews: 0,
     userFollowers: 0,
     rating: 0,
@@ -22,6 +30,7 @@ export default function Page({ params }: { params: Params }) {
     time: new Date().toISOString(),
     content: "",
     restaurantId: parseInt(id, 10),
+    userId: parseInt(userId, 10),
   });
 
   const handleChange = (e: any) => {
@@ -86,7 +95,7 @@ export default function Page({ params }: { params: Params }) {
                     type="text"
                     id="username"
                     name="username"
-                    value={review.username}
+                    value={username}
                     onChange={handleChange}
                     className="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
                   />
