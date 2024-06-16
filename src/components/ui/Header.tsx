@@ -5,6 +5,7 @@ import { useState } from "react";
 import Provider from "./Provider";
 import Signout from "./Signout";
 import { useSession } from "next-auth/react";
+import Image from "next/image";
 
 export default function Header() {
   const { data: session } = useSession();
@@ -31,11 +32,7 @@ export default function Header() {
           <div className="flex lg:flex-1">
             <a href="/homepage" className="-m-1.5 p-1.5">
               <span className="sr-only">SavorServe</span>
-              <img
-                className="h-28 w-auto"
-                src="images/logo-dark-noback.png"
-                alt=""
-              />
+              <img className="h-28 w-auto" src="/images/logo.jpg" alt="" />
             </a>
           </div>
           <div className="flex lg:hidden">
@@ -73,11 +70,7 @@ export default function Header() {
             <div className="flex items-center justify-between">
               <a href="#" className="-m-1.5 p-1.5">
                 <span className="sr-only">SavorServe</span>
-                <img
-                  className="h-8 w-auto"
-                  src="images/logo-dark-noback.png"
-                  alt=""
-                />
+                <Image src={"images/logo.png"} alt="Logo" />
               </a>
               <button
                 type="button"

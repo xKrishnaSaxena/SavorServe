@@ -99,9 +99,9 @@ export default function AddRestaurant() {
             <h2 className="text-2xl font-bold text-center mb-6">
               Add New Restaurant
             </h2>
-            <div className="flex space-x-8">
+            <div className="flex-grow flex justify-center items-center space-x-8">
               <form
-                className="space-y-4 text-black w-1/2"
+                className="space-y-4 text-black w-1/2 "
                 onSubmit={handleSubmit}
               >
                 <div>
