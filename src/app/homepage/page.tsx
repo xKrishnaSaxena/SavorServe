@@ -1,6 +1,6 @@
 "use client";
 
-import Carousel from "@/components/ui/Carousel";
+import Carousel2 from "@/components/ui/Carousel2";
 import Header from "../../components/ui/Header";
 import Footer from "../../components/ui/Footer";
 import Link from "next/link";
@@ -80,7 +80,7 @@ export default function Example() {
               </div>
 
               <div className="mt-10">
-                <Carousel images={images} />
+                <Carousel2 images={images} />
               </div>
               <div className="pt-12">
                 <Link

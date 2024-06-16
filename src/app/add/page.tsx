@@ -21,17 +21,11 @@ export default function AddRestaurant() {
     averageCost: "",
     paymentMethods: "",
     moreInfo: "",
-    images: [
-      "images/marineroom.jpg",
-      "images/punjab.jpg",
-      "images/sharma.jpg",
-      "images/skybar.jpg",
-      "images/tunday.jpg",
-    ],
-    menuPhotos: ["images/menu1.jpg", "images/menu2.jpg", "images/menu3.png"],
+    images: [] as string[], // Image URLs or base64 strings
+    menuPhotos: [] as string[], // Image URLs or base64 strings
   });
 
-  const handleChange = (e: any) => {
+  const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const { name, value } = e.target;
     setRestaurant((prev) => ({
       ...prev,
@@ -39,23 +33,48 @@ export default function AddRestaurant() {
     }));
   };
 
+  const handleImageChange = async (
+    e: React.ChangeEvent<HTMLInputElement>,
+    field: "images" | "menuPhotos"
+  ) => {
+    const files = e.target.files;
+    if (files) {
+      const promises = Array.from(files).map((file) => {
+        return new Promise<string>((resolve, reject) => {
+          const reader = new FileReader();
+          reader.onload = () => resolve(reader.result as string);
+          reader.onerror = reject;
+          reader.readAsDataURL(file);
+        });
+      });
+
+      const base64Images = await Promise.all(promises);
+      setRestaurant((prev) => ({
+        ...prev,
+        [field]: [...prev[field], ...base64Images],
+      }));
+    }
+  };
+
   const handleSubmit = async (e: React.SyntheticEvent) => {
     e.preventDefault();
     console.log(restaurant);
-    const response = await fetch("/api/restaurant", {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify(restaurant),
-    });
-    console.log(response);
-    console.log(response.body);
-    if (response.ok) {
-      console.log("Restaurant added successfully");
-      // Reset form or redirect user
-    } else {
-      console.error("Error adding restaurant");
+    try {
+      const response = await fetch("/api/restaurant", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(restaurant),
+      });
+
+      if (response.ok) {
+        console.log("Restaurant added successfully");
+      } else {
+        console.error("Error adding restaurant");
+      }
+    } catch (error) {
+      console.error("Error:", error);
     }
   };
 
@@ -245,6 +264,40 @@ export default function AddRestaurant() {
                     value={restaurant.moreInfo}
                     onChange={handleChange}
                     className="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
+                  />
+                </div>
+                <div>
+                  <label
+                    htmlFor="images"
+                    className="block text-sm font-medium text-white"
+                  >
+                    Restaurant Images
+                  </label>
+                  <input
+                    type="file"
+                    id="images"
+                    name="images"
+                    multiple
+                    accept="image/*"
+                    onChange={(e) => handleImageChange(e, "images")}
+                    className="mt-1 block w-full px-3 py-2 border text-white border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
+                  />
+                </div>
+                <div>
+                  <label
+                    htmlFor="menuPhotos"
+                    className="block text-sm font-medium text-white"
+                  >
+                    Menu Photos
+                  </label>
+                  <input
+                    type="file"
+                    id="menuPhotos"
+                    name="menuPhotos"
+                    multiple
+                    accept="image/*"
+                    onChange={(e) => handleImageChange(e, "menuPhotos")}
+                    className="mt-1 block w-full px-3 py-2 border text-white border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
                   />
                 </div>
                 <button

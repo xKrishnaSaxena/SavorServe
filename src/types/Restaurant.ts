@@ -1,4 +1,5 @@
 export interface Restaurant {
+  id: number; // Assuming your Restaurant ID is of type Int in Prisma
   name: string;
   rating: number;
   diningRatings: number;
@@ -9,22 +10,24 @@ export interface Restaurant {
   status: string;
   timing: string;
   safetyMeasures: string[];
-  menu: MenuItem[];
+  menu: MenuItem[]; // Assuming you have a one-to-many relationship between Restaurant and MenuItem
   knownFor: string[];
   averageCost: string;
   paymentMethods: string[];
   moreInfo: string[];
-  images: string[];
-  menuPhotos: string[];
-  reviews: Review[];
+  images: Image[]; // Assuming you have a one-to-many relationship between Restaurant and Image for images
+  menuPhotos: Image[]; // Assuming you have a one-to-many relationship between Restaurant and Image for menu photos
+  reviews: Review[]; // Assuming you have a one-to-many relationship between Restaurant and Review
 }
 
 export interface MenuItem {
+  id: number; // Assuming your MenuItem ID is of type Int in Prisma
   category: string;
   dishes: string[];
 }
 
 export interface Review {
+  id: number; // Assuming your Review ID is of type Int in Prisma
   username: string;
   userReviews: number;
   userFollowers: number;
@@ -32,4 +35,10 @@ export interface Review {
   type: string;
   time: string;
   content?: string;
+}
+
+export interface Image {
+  id: number; // Assuming your Image ID is of type Int in Prisma
+  url: string;
+  publicId: string;
 }

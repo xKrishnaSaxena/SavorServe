@@ -10,7 +10,7 @@ datasource db {
 }
 
 model Restaurant {
-  id              Int     @id @default(autoincrement())
+  id              Int             @id @default(autoincrement())
   name            String
   rating          Float
   diningRatings   Int
@@ -26,8 +26,8 @@ model Restaurant {
   averageCost     String
   paymentMethods  String[]
   moreInfo        String[]
-  images          String[]
-  menuPhotos      String[]
+  images          RestaurantImage[]
+  menuPhotos      MenuPhoto[]
   reviews         Review[]
 }
 
@@ -50,7 +50,6 @@ model User {
   reviews      Review[]
 }
 
-
 model Review {
   id           Int        @id @default(autoincrement())
   username     String
@@ -66,3 +65,18 @@ model Review {
   user         User       @relation(fields: [userId], references: [id])
 }
 
+model RestaurantImage {
+  id           Int        @id @default(autoincrement())
+  url          String
+  publicId     String
+  restaurantId Int        @map("restaurant_id")
+  restaurant   Restaurant @relation(fields: [restaurantId], references: [id])
+}
+
+model MenuPhoto {
+  id           Int        @id @default(autoincrement())
+  url          String
+  publicId     String
+  restaurantId Int        @map("restaurant_id")
+  restaurant   Restaurant @relation(fields: [restaurantId], references: [id])
+}

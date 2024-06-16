@@ -2,9 +2,9 @@ import { Image } from "@/types/Restaurant";
 import React, { useState, useEffect } from "react";
 
 interface CarouselProps {
-  images: Image[];
+  images: string[];
 }
-const Carousel: React.FC<CarouselProps> = ({ images }) => {
+const Carousel2: React.FC<CarouselProps> = ({ images }) => {
   const [currentSlide, setCurrentSlide] = useState(0);
 
   const handleNext = () => {
@@ -36,7 +36,7 @@ const Carousel: React.FC<CarouselProps> = ({ images }) => {
             data-carousel-item={index === currentSlide ? "active" : ""}
           >
             <img
-              src={slide.url}
+              src={slide}
               className="absolute block w-full h-full object-cover"
               alt=""
             />
@@ -114,4 +114,4 @@ const Carousel: React.FC<CarouselProps> = ({ images }) => {
   );
 };
 
-export default Carousel;
+export default Carousel2;

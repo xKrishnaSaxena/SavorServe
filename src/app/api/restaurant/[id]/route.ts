@@ -12,6 +12,8 @@ export async function GET(
     include: {
       menu: true,
       reviews: true,
+      images: true,
+      menuPhotos: true,
     },
   });
 
