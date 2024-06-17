@@ -10,15 +10,15 @@ import Image from "next/image";
 export default function Header() {
   const { data: session } = useSession();
   const navigation = [
-    { name: "Italian", href: "/clx9k6420000010qdi7ou1njr" },
-    { name: "American", href: "/clx9k6420000010qdi7ou1njr" },
-    { name: "Asian", href: "/clx9k6420000010qdi7ou1njr" },
-    { name: "Mexican", href: "/clx9k6420000010qdi7ou1njr" },
-    { name: "Chinese", href: "/clx9k6420000010qdi7ou1njr" },
-    { name: "Thai", href: "/clx9k6420000010qdi7ou1njr" },
-    { name: "Vegan", href: "/clx9k6420000010qdi7ou1njr" },
-    { name: "Non-Veg", href: "/1" },
-    { name: "Deserts", href: "/clx9k6420000010qdi7ou1njr" },
+    { name: "Italian", href: "/8" },
+    { name: "American", href: "/9" },
+    { name: "Asian", href: "/10" },
+    { name: "Mexican", href: "/11" },
+    { name: "Chinese", href: "/12" },
+    { name: "Thai", href: "/13" },
+    { name: "Vegan", href: "/14" },
+    { name: "Non-Veg", href: "/15" },
+    { name: "Deserts", href: "/16" },
   ];
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
 
