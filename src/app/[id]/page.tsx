@@ -14,6 +14,7 @@ import { useState, useEffect } from "react";
 import Spinner from "@/components/ui/Spinner";
 import Link from "next/link";
 import Provider from "@/components/ui/Provider";
+import AddMenu from "@/components/restaurant/AddMenu";
 
 type Params = {
   id: string;
@@ -80,11 +81,7 @@ const RestaurantPage = ({ params }: { params: Params }) => {
       case "Add Menu": // Handle "Add Menu" section
         return (
           <div className="flex justify-center mt-6">
-            <Link href={`/${id}/addMenu`}>
-              <button className="bg-indigo-600 text-white py-2 px-4 rounded-md hover:bg-indigo-700">
-                Go to Add Menu Page
-              </button>
-            </Link>
+            <AddMenu />
           </div>
         );
       default:

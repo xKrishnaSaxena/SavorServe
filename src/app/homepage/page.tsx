@@ -3,8 +3,9 @@
 import Carousel2 from "@/components/ui/Carousel2";
 import Header from "../../components/ui/Header";
 import Footer from "../../components/ui/Footer";
-import Link from "next/link";
+
 import Provider from "@/components/ui/Provider";
+import AddRestaurant from "@/components/restaurant/AddRestaurant";
 
 export default function Example() {
   const images = [
@@ -83,12 +84,7 @@ export default function Example() {
                 <Carousel2 images={images} />
               </div>
               <div className="pt-12">
-                <Link
-                  href="/add"
-                  className=" justify-center py-2 px-4 border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500 mt-6"
-                >
-                  Add Restaurant
-                </Link>
+                <AddRestaurant />
               </div>
             </div>
           </div>
