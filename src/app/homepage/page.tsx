@@ -1,13 +1,45 @@
 "use client";
-
-import Carousel2 from "@/components/ui/Carousel2";
+import { useEffect, useState } from "react";
+import Provider from "@/components/ui/Provider";
 import Header from "../../components/ui/Header";
 import Footer from "../../components/ui/Footer";
-
-import Provider from "@/components/ui/Provider";
+import Carousel2 from "@/components/ui/Carousel2";
 import AddRestaurant from "@/components/restaurant/AddRestaurant";
+import { useRouter } from "next/navigation";
+import Spinner from "@/components/ui/Spinner";
+
+interface Restaurant {
+  id: number;
+  name: string;
+  images: { url: string }[];
+}
 
 export default function Example() {
+  const [loading, setLoading] = useState(true);
+  const [restaurants, setRestaurants] = useState<Restaurant[]>([]);
+  useEffect(() => {
+    const fetchRestaurant = async () => {
+      try {
+        const res = await fetch(`/api/`);
+        if (!res.ok) {
+          throw new Error("Failed to fetch restaurant");
+        }
+        const data = await res.json();
+        setRestaurants(data);
+        setLoading(false);
+      } catch (error) {
+        console.error(error);
+        setLoading(false);
+      }
+    };
+
+    fetchRestaurant();
+  }, []);
+
+  const [searchResults, setSearchResults] = useState<Restaurant[]>([]);
+  const [isSearchFocused, setIsSearchFocused] = useState(false); // Track if search bar is focused
+  const router = useRouter();
+
   const images = [
     "images/marineroom.jpg",
     "images/punjab.jpg",
@@ -15,6 +47,32 @@ export default function Example() {
     "images/skybar.jpg",
     "images/tunday.jpg",
   ];
+
+  const handleSearchFocus = () => {
+    setIsSearchFocused(true);
+    setSearchResults(restaurants);
+  };
+
+  const handleSearchBlur = () => {
+    setIsSearchFocused(false);
+  };
+
+  const handleSearchChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const query = e.target.value.toLowerCase();
+    const filteredResults = restaurants.filter((restaurant) =>
+      restaurant.name.toLowerCase().includes(query)
+    );
+    setSearchResults(filteredResults);
+  };
+
+  const handleRestaurantClick = (id: number) => {
+    router.push(`/${id}`);
+  };
+
+  if (loading) {
+    return <Spinner />;
+  }
+
   return (
     <Provider>
       <div className="bg-white-100">
@@ -33,7 +91,6 @@ export default function Example() {
             />
           </div>
           <div className="mx-auto max-w-2xl py-32 sm:py-48 lg:py-28">
-            <div className="hidden sm:mb-8 sm:flex sm:justify-center"></div>
             <div className="text-center">
               <h1 className="text-4xl font-bold tracking-tight text-white sm:text-6xl">
                 Your next meal is just a click away. Order now!
@@ -44,7 +101,11 @@ export default function Example() {
                 delivery, right at your doorstep.
               </p>
               <div className="mt-10 flex items-center justify-center gap-x-6">
-                <form className="w-full max-w-lg">
+                <form
+                  className="w-full max-w-lg"
+                  onFocus={handleSearchFocus}
+                  onBlur={handleSearchBlur}
+                >
                   <div className="relative">
                     <div className="absolute inset-y-0 left-0 flex items-center pl-3 pointer-events-none">
                       <svg
@@ -66,16 +127,35 @@ export default function Example() {
                     <input
                       type="search"
                       id="search"
+                      name="search"
                       className="block w-full p-5 pl-12 text-sm text-gray-900 border border-gray-300 rounded-lg bg-gray-50 focus:ring-blue-500 focus:border-blue-500 dark:bg-black dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
                       placeholder="Search for a restaurant, cuisine or a dish"
-                      required
+                      onChange={handleSearchChange}
                     />
-                    <button
-                      type="submit"
-                      className="text-white absolute right-3 bottom-3 bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-4 py-2 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800"
-                    >
-                      Order Now
-                    </button>
+                  </div>
+                  <div
+                    className={`mt-8 ml-3 ${
+                      isSearchFocused ? "block" : "hidden"
+                    } search-results`}
+                  >
+                    {searchResults.map((restaurant) => (
+                      <div
+                        key={restaurant.id}
+                        onClick={() => handleRestaurantClick(restaurant.id)}
+                        className="search-results-item"
+                      >
+                        <div className="flex items-center">
+                          <h2>{restaurant.name}</h2>
+                          {restaurant.images.length > 0 && (
+                            <img
+                              src={restaurant.images[0].url}
+                              alt={restaurant.name}
+                              className="w-8 h-8 rounded-full"
+                            />
+                          )}
+                        </div>
+                      </div>
+                    ))}
                   </div>
                 </form>
               </div>

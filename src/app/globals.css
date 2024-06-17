@@ -100,3 +100,37 @@ body {
   margin-left: 15px;
   animation: loader_5191 675ms ease-in-out 600ms infinite;
 }
+
+/* Add this CSS to your existing styles or create a new CSS file */
+.search-results {
+  max-height: 300px; /* Adjust as needed */
+  overflow-y: auto; /* Enable scrolling if there are many results */
+}
+
+.search-results-item {
+  padding: 10px;
+  border-bottom: 1px solid #ddd; /* Add a border between items */
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+
+  justify-content: space-between;
+  align-items: center; /* Align items vertically */
+}
+
+.search-results-item:hover {
+  background-color: slategray; /* Change background color on hover */
+}
+
+.search-results-item img {
+  width: 40px;
+  height: 40px;
+  object-fit: cover;
+  /* Align image to the right */
+
+  border-radius: 8px; /* Make the restaurant image rectangular */
+}
+
+.search-results-item h2 {
+  margin-right: auto; /* Push text to the left */
+  color: white; /* Set text color to white */
+}
