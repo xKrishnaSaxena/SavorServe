@@ -5,6 +5,8 @@ import Header from "@/components/ui/Header";
 import Footer from "@/components/ui/Footer";
 import Provider from "@/components/ui/Provider";
 import { useSession } from "next-auth/react";
+import { useRouter } from "next/navigation";
+import { useToast } from "@/components/ui/use-toast";
 
 type Params = {
   id: string;
@@ -12,6 +14,9 @@ type Params = {
 
 export default function Page({ params }: { params: Params }) {
   const { id } = params;
+  const [loading, setLoading] = useState(false);
+  const router = useRouter();
+  const { toast } = useToast();
   const { data: session } = useSession();
   let username = "";
   if (session?.user?.username) {
@@ -42,6 +47,7 @@ export default function Page({ params }: { params: Params }) {
   };
 
   const handleFormSubmit = async (e: React.SyntheticEvent) => {
+    setLoading(true);
     e.preventDefault();
     console.log(review);
     try {
@@ -53,11 +59,17 @@ export default function Page({ params }: { params: Params }) {
         body: JSON.stringify(review),
       });
       const data = await response.json();
-      console.log("Review submitted successfully:", data);
+      toast({
+        title: "Review added successfully",
+      });
+      router.push(`/${id}`);
       // You can also handle success notification or redirection here
     } catch (error) {
-      console.error("Error submitting Review", error);
+      toast({
+        title: "Error adding the Review",
+      });
     }
+    setLoading(false);
   };
 
   return (
@@ -94,6 +106,7 @@ export default function Page({ params }: { params: Params }) {
                   <input
                     type="text"
                     id="username"
+                    required
                     name="username"
                     value={username}
                     onChange={handleChange}
@@ -113,6 +126,7 @@ export default function Page({ params }: { params: Params }) {
                     name="rating"
                     value={review.rating}
                     onChange={handleChange}
+                    required
                     placeholder="Please give rating out of 5"
                     className="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
                   />
@@ -127,6 +141,7 @@ export default function Page({ params }: { params: Params }) {
                   <input
                     type="text"
                     id="type"
+                    required
                     name="type"
                     value={review.type}
                     onChange={handleChange}
@@ -146,6 +161,7 @@ export default function Page({ params }: { params: Params }) {
                     id="content"
                     name="content"
                     value={review.content}
+                    required
                     onChange={handleChange}
                     placeholder="Review here"
                     className="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
