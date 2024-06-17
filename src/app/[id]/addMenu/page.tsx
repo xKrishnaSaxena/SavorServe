@@ -11,7 +11,7 @@ type Params = {
 
 export default function Page({ params }: { params: Params }) {
   const { id } = params;
-
+  const [loading, setLoading] = useState(false);
   const [category, setCategory] = useState({
     category: "",
     dishes: [""],
@@ -53,6 +53,7 @@ export default function Page({ params }: { params: Params }) {
   };
 
   const handleFormSubmit = async (e: React.SyntheticEvent) => {
+    setLoading(true);
     e.preventDefault();
     console.log(category);
     try {
@@ -69,6 +70,7 @@ export default function Page({ params }: { params: Params }) {
     } catch (error) {
       console.error("Error submitting menu:", error);
     }
+    setLoading(false);
   };
 
   return (
