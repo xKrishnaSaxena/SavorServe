@@ -37,7 +37,7 @@ export default function Example() {
   }, []);
 
   const [searchResults, setSearchResults] = useState<Restaurant[]>([]);
-  const [isSearchFocused, setIsSearchFocused] = useState(false); // Track if search bar is focused
+  const [isSearchFocused, setIsSearchFocused] = useState(false);
   const router = useRouter();
 
   const images = [
@@ -53,7 +53,10 @@ export default function Example() {
     setSearchResults(restaurants);
   };
 
-  const handleSearchBlur = () => {
+  const handleSearchBlur = (e: React.FocusEvent<HTMLFormElement>) => {
+    if (e.relatedTarget && e.currentTarget.contains(e.relatedTarget as Node)) {
+      return;
+    }
     setIsSearchFocused(false);
   };
 
@@ -141,19 +144,22 @@ export default function Example() {
                     {searchResults.map((restaurant) => (
                       <div
                         key={restaurant.id}
+                        tabIndex={0} // Make the div focusable
                         onClick={() => handleRestaurantClick(restaurant.id)}
-                        className="search-results-item"
+                        className="search-results-item flex items-center justify-between p-3 mb-2 bg-gray-900 border border-gray-300 rounded-lg cursor-pointer  hover:bg-gray-600 focus:bg-gray-600"
                       >
-                        <div className="flex items-center">
-                          <h2>{restaurant.name}</h2>
-                          {restaurant.images.length > 0 && (
-                            <img
-                              src={restaurant.images[0].url}
-                              alt={restaurant.name}
-                              className="w-8 h-8 rounded-full"
-                            />
-                          )}
+                        <div>
+                          <h2 className="text-lg font-semibold ">
+                            {restaurant.name}
+                          </h2>
                         </div>
+                        {restaurant.images.length > 0 && (
+                          <img
+                            src={restaurant.images[0].url}
+                            alt={restaurant.name}
+                            className="w-12 h-12 rounded-lg"
+                          />
+                        )}
                       </div>
                     ))}
                   </div>
