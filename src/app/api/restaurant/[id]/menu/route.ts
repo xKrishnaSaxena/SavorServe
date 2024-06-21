@@ -5,15 +5,21 @@ export async function POST(req: NextRequest) {
   try {
     const data = await req.json();
 
-    const newMenu = await prisma.menuItem.create({
-      data: {
-        category: data.category,
-        dishes: data.dishes,
-        restaurantId: data.restaurantId,
+    // Fetch menu with its dishes included
+    const menuWithDishes = await prisma.menu.findUnique({
+      where: { id: data.id }, // Assuming you have the menu ID available in data
+      include: {
+        dishes: true, // Include the associated dishes
       },
     });
-    return NextResponse.json({ newMenu });
+
+    if (!menuWithDishes) {
+      return NextResponse.json({ error: "Menu not found" }, { status: 404 });
+    }
+
+    return NextResponse.json({ menu: menuWithDishes });
   } catch (error) {
-    console.log(error);
+    console.error("Error fetching menu:", error);
+    return NextResponse.json({ error: "Failed to fetch menu" }, { status: 500 });
   }
 }

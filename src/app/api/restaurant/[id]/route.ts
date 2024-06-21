@@ -10,7 +10,11 @@ export async function GET(
   const restaurant = await prisma.restaurant.findUnique({
     where: { id: id },
     include: {
-      menu: true,
+      menu: {
+        include:{
+          dishes:true
+        }
+      },
       reviews: true,
       images: true,
       menuPhotos: true,

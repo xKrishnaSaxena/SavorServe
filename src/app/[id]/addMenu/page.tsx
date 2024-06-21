@@ -19,7 +19,7 @@ export default function Page({ params }: { params: Params }) {
   const [loading, setLoading] = useState(false);
   const [category, setCategory] = useState({
     category: "",
-    dishes: [""],
+    dishes: [{ name: "", price: "" }],
     restaurantId: parseInt(id, 10),
   });
 
@@ -31,10 +31,13 @@ export default function Page({ params }: { params: Params }) {
     }));
   };
 
-  const handleDishChange = (e: any, index: number) => {
+  const handleDishChange = (e: any, index: number, field: string) => {
     const { value } = e.target;
     const newDishes = [...category.dishes];
-    newDishes[index] = value;
+    newDishes[index] = {
+      ...newDishes[index],
+      [field]: value,
+    };
     setCategory((prev) => ({
       ...prev,
       dishes: newDishes,
@@ -44,7 +47,7 @@ export default function Page({ params }: { params: Params }) {
   const handleAddDish = () => {
     setCategory((prev) => ({
       ...prev,
-      dishes: [...prev.dishes, ""],
+      dishes: [...prev.dishes, { name: "", price: "" }],
     }));
   };
 
@@ -129,18 +132,33 @@ export default function Page({ params }: { params: Params }) {
                   {category.dishes.map((dish, index) => (
                     <div key={index}>
                       <label
-                        htmlFor={`dish-${index}`}
+                        htmlFor={`dish-name-${index}`}
                         className="block text-sm font-medium text-white"
                       >
-                        Dish
+                        Dish Name
                       </label>
                       <input
                         type="text"
-                        id={`dish-${index}`}
-                        name={`dish-${index}`}
+                        id={`dish-name-${index}`}
+                        name={`dish-name-${index}`}
                         required
-                        value={dish}
-                        onChange={(e) => handleDishChange(e, index)}
+                        value={dish.name}
+                        onChange={(e) => handleDishChange(e, index, "name")}
+                        className="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
+                      />
+                      <label
+                        htmlFor={`dish-price-${index}`}
+                        className="block text-sm font-medium text-white mt-4"
+                      >
+                        Dish Price
+                      </label>
+                      <input
+                        type="text"
+                        id={`dish-price-${index}`}
+                        name={`dish-price-${index}`}
+                        required
+                        value={dish.price}
+                        onChange={(e) => handleDishChange(e, index, "price")}
                         className="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
                       />
                     </div>

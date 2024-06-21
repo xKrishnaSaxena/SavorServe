@@ -21,7 +21,7 @@ model Restaurant {
   status          String
   timing          String
   safetyMeasures  String[]
-  menu            MenuItem[]
+  menu            Menu[]
   knownFor        String[]
   averageCost     String
   paymentMethods  String[]
@@ -31,12 +31,20 @@ model Restaurant {
   reviews         Review[]
 }
 
-model MenuItem {
+model Menu {
   id           Int        @id @default(autoincrement())
   category     String
-  dishes       String[]
+  dishes       Dish[]
   restaurantId Int        @map("restaurant_id")
   restaurant   Restaurant @relation(fields: [restaurantId], references: [id])
+}
+
+model Dish {
+  id       Int    @id @default(autoincrement())
+  name     String
+  price    String
+  menuId   Int
+  menu     Menu   @relation(fields: [menuId], references: [id])
 }
 
 model User {

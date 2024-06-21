@@ -23,7 +23,12 @@ export interface Restaurant {
 export interface MenuItem {
   id: number; // Assuming your MenuItem ID is of type Int in Prisma
   category: string;
-  dishes: string[];
+  dishes: Dish[];
+}
+export interface Dish{
+  id:number;
+  name:string;
+  price:number
 }
 
 export interface Review {

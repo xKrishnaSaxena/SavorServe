@@ -81,7 +81,7 @@ const RestaurantPage = ({ params }: { params: Params }) => {
       case "Add Menu": // Handle "Add Menu" section
         return (
           <div className="flex justify-center mt-6">
-            <AddMenu />
+            <AddMenu id={id}/>
           </div>
         );
       default:
