@@ -6,8 +6,13 @@ import Provider from "./Provider";
 import Signout from "./Signout";
 import { useSession } from "next-auth/react";
 import Image from "next/image";
+import Link from "next/link";
+import { useCart } from "@/contexts/CartContext";
 
 export default function Header() {
+  const { cartItems } = useCart();
+  console.log(cartItems);
+  console.log(cartItems.length);
   const { data: session } = useSession();
   const navigation = [
     { name: "Italian", href: "/8" },

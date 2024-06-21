@@ -40,8 +40,7 @@ const Reviews: React.FC<ReviewsProps> = ({ reviews, id }) => {
               <div>
                 <h4 className="font-bold">{review.username}</h4>
                 <p className="text-sm text-gray-500">
-                  {review.userReviews} reviews | {review.userFollowers}{" "}
-                  Followers
+                  {review.userReviews} reviews 
                 </p>
               </div>
             </div>
@@ -56,11 +55,6 @@ const Reviews: React.FC<ReviewsProps> = ({ reviews, id }) => {
               </span>
             </div>
             <p className="mb-2">{review.content}</p>
-            <div className="flex text-blue-500 text-sm">
-              <button className="mr-4">Helpful</button>
-              <button className="mr-4">Comment</button>
-              <button>Share</button>
-            </div>
           </div>
         ))}
         <div className="flex justify-center mt-6">
