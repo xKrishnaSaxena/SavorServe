@@ -11,8 +11,7 @@ import { useCart } from "@/contexts/CartContext";
 
 export default function Header() {
   const { cartItems } = useCart();
-  console.log(cartItems);
-  console.log(cartItems.length);
+
   const { data: session } = useSession();
   const navigation = [
     { name: "Italian", href: "/8" },

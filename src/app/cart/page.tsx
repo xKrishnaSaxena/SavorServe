@@ -4,9 +4,17 @@ import Header from "../../components/ui/Header";
 import Footer from "../../components/ui/Footer";
 import Provider from "@/components/ui/Provider";
 import { useCart } from "@/contexts/CartContext";
+import { useRouter } from "next/navigation";
 
 const CartPage: React.FC = () => {
   const { cartItems, removeFromCart, clearCart } = useCart();
+  const router = useRouter();
+  // Calculate total price
+  const totalPrice = cartItems.reduce(
+    (total, item) => total + Number(item.price),
+    0
+  );
+  console.log(totalPrice);
 
   return (
     <Provider>
@@ -26,7 +34,7 @@ const CartPage: React.FC = () => {
             />
           </div>
 
-          <div className="mx-auto max-w-md py-8 mt-32">
+          <div className="mx-auto max-w-md py-8 mt-20">
             <h1 className="text-3xl font-semibold mb-8">Your Cart</h1>
             {cartItems.length === 0 ? (
               <p>Your cart is empty.</p>
@@ -52,11 +60,23 @@ const CartPage: React.FC = () => {
                   ))}
                 </ul>
                 <div className="mt-8">
+                  <div className="flex justify-between items-center mb-4">
+                    <span className="text-lg font-semibold">Total:</span>
+                    <span className="text-lg font-semibold">₹{totalPrice}</span>
+                  </div>
                   <button
                     className="px-4 py-2 bg-red-600 text-white rounded-md hover:bg-red-700 mr-4"
                     onClick={() => clearCart()}
                   >
                     Clear Cart
+                  </button>
+                  <button
+                    className="px-4 py-2 bg-indigo-600 text-white rounded-md hover:bg-indigo-700"
+                    onClick={() => {
+                      router.push("/checkout");
+                    }}
+                  >
+                    Proceed to Checkout
                   </button>
                 </div>
               </>
