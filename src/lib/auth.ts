@@ -34,13 +34,18 @@ export const authOptions: NextAuthOptions = {
         if (!passwordMatch) {
           return null;
         }
-        return existingUser;
+        return {
+          id: existingUser.id + "",
+          username: existingUser.username,
+          email: existingUser.email,
+          name: existingUser.name,
+          address: existingUser.address,
+        };
       },
     }),
   ],
   callbacks: {
-    async jwt({ token, user, session }) {
-      console.log("jwt callback", { token, user, session });
+    async jwt({ token, user }) {
       if (user) {
         return {
           ...token,
@@ -54,7 +59,6 @@ export const authOptions: NextAuthOptions = {
       return token;
     },
     async session({ session, user, token }) {
-      console.log("session callback", { token, user, session });
       return {
         ...session,
         user: {
