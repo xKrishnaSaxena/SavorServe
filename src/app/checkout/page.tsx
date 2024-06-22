@@ -12,6 +12,7 @@ import Footer from "@/components/ui/Footer";
 import { useCart } from "@/contexts/CartContext";
 import Provider from "@/components/ui/Provider";
 import { useSession } from "next-auth/react";
+import Spinner from "@/components/ui/Spinner";
 
 const stripePromise = loadStripe(
   process.env.NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY!
@@ -21,23 +22,24 @@ const CheckoutForm: React.FC = () => {
   const stripe = useStripe();
   const elements = useElements();
   const { data: session } = useSession();
-  console.log(session?.user.name);
-  let initialname = "";
+
+  let initialname;
   if (session?.user?.name) {
     initialname = session?.user.name;
   }
-  let initialaddress = "";
+  console.log(initialname);
+  let initialaddress;
   if (session?.user?.address) {
     initialaddress = session?.user.address;
   }
-
-  const { cartItems, clearCart } = useCart();
+  console.log(initialaddress);
   const [name, setName] = useState(initialname);
   const [address, setAddress] = useState(initialaddress);
   const [paymentMethod, setPaymentMethod] = useState("cod");
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState("");
   const [success, setSuccess] = useState(false);
+  const { cartItems, clearCart } = useCart();
 
   const handleSubmit = async (event: React.FormEvent) => {
     event.preventDefault();
@@ -100,6 +102,9 @@ const CheckoutForm: React.FC = () => {
       console.error("Error processing payment:", error);
     }
   };
+  if (!session) {
+    return <Spinner />;
+  }
 
   return (
     <form onSubmit={handleSubmit}>
@@ -115,7 +120,7 @@ const CheckoutForm: React.FC = () => {
           <input
             type="text"
             id="name"
-            value={name}
+            value={initialname}
             onChange={(e) => setName(e.target.value)}
             className="mt-1 block w-full px-3 text-black py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
           />
@@ -130,7 +135,7 @@ const CheckoutForm: React.FC = () => {
           <input
             type="text"
             id="address"
-            value={address}
+            value={initialaddress}
             onChange={(e) => setAddress(e.target.value)}
             className="mt-1 block w-full px-3 text-black py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
           />

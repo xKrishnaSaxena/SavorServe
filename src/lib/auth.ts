@@ -34,28 +34,27 @@ export const authOptions: NextAuthOptions = {
         if (!passwordMatch) {
           return null;
         }
-        return {
-          id: existingUser.id + "",
-          username: existingUser.username,
-          email: existingUser.email,
-          name: existingUser.name,
-          address: existingUser.address,
-        };
+        return existingUser;
       },
     }),
   ],
   callbacks: {
-    async jwt({ token, user }) {
+    async jwt({ token, user, session }) {
+      console.log("jwt callback", { token, user, session });
       if (user) {
         return {
           ...token,
           username: user.username,
           id: user.id,
+          email: user.email,
+          name: user.name,
+          address: user.address,
         };
       }
       return token;
     },
     async session({ session, user, token }) {
+      console.log("session callback", { token, user, session });
       return {
         ...session,
         user: {
