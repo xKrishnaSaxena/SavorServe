@@ -3,6 +3,7 @@ import { NextAuthOptions } from "next-auth";
 import CredentialsProvider from "next-auth/providers/credentials";
 import prisma from "./prisma";
 import { compare } from "bcrypt";
+
 export const authOptions: NextAuthOptions = {
   adapter: PrismaAdapter(prisma),
   secret: process.env.NEXTAUTH_SECRET,
@@ -38,7 +39,7 @@ export const authOptions: NextAuthOptions = {
           id: existingUser.id + "",
           username: existingUser.username,
           email: existingUser.email,
-          name: existingUser.name,
+          name: existingUser.name || "",
           address: existingUser.address,
         };
       },
