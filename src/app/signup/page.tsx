@@ -19,6 +19,7 @@ export default function Example() {
     username: "",
     email: "",
     password: "",
+    address: "",
   });
 
   const handleChange = (e: any) => {
@@ -107,6 +108,23 @@ export default function Example() {
                     id="name"
                     name="name"
                     value={user.name}
+                    required
+                    onChange={handleChange}
+                    className="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
+                  />
+                </div>
+                <div>
+                  <label
+                    htmlFor="address"
+                    className="block text-sm font-medium text-white"
+                  >
+                    Address
+                  </label>
+                  <input
+                    type="text"
+                    id="address"
+                    name="address"
+                    value={user.address}
                     required
                     onChange={handleChange}
                     className="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"

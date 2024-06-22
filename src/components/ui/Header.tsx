@@ -4,17 +4,12 @@ import { Bars3Icon, XMarkIcon } from "@heroicons/react/24/outline";
 import { useState } from "react";
 import Provider from "./Provider";
 import Signout from "./Signout";
-import { useSession } from "next-auth/react";
+
 import Image from "next/image";
-import Link from "next/link";
-import { useCart } from "@/contexts/CartContext";
 
 export default function Header() {
-  const { cartItems } = useCart();
-
-  const { data: session } = useSession();
   const navigation = [
-    { name: "Italian", href: "/8" },
+    { name: "Italian", href: "/1" },
     { name: "American", href: "/9" },
     { name: "Asian", href: "/10" },
     { name: "Mexican", href: "/11" },

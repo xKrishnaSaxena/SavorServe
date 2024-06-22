@@ -25,10 +25,10 @@ export interface MenuItem {
   category: string;
   dishes: Dish[];
 }
-export interface Dish{
-  id:number;
-  name:string;
-  price:number
+export interface Dish {
+  id: number;
+  name: string;
+  price: number;
 }
 
 export interface Review {
@@ -46,4 +46,12 @@ export interface Image {
   id: number; // Assuming your Image ID is of type Int in Prisma
   url: string;
   publicId: string;
+}
+export interface User {
+  id: number;
+  username: string;
+  email: string;
+  password: string;
+  name: string;
+  address: string; // Ensure 'address' is included
 }

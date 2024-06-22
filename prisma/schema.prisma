@@ -52,7 +52,8 @@ model User {
   email        String     @unique
   name         String?
   username     String     @unique
-  password     String
+  password     String 
+  address     String
   userReviews  Int        @default(0)
   userFollowers Int       @default(0)
   reviews      Review[]

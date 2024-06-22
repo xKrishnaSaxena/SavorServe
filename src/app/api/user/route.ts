@@ -12,12 +12,13 @@ const UserSchema = z.object({
     .string()
     .min(1, "Password is required")
     .min(8, "Password must have more than 8 characters"),
+  address: z.string().min(1, "Address is required").max(1000),
 });
 
 export async function POST(req: NextRequest) {
   try {
     const body = await req.json();
-    const { email, password, username, name } = UserSchema.parse(body);
+    const { email, password, username, name, address } = UserSchema.parse(body);
 
     const existingUserByEmail = await prisma.user.findUnique({
       where: { email: email },
@@ -46,6 +47,7 @@ export async function POST(req: NextRequest) {
         email,
         password: hashedPassword,
         username,
+        address,
       },
     });
 

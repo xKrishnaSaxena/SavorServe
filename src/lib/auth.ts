@@ -38,6 +38,8 @@ export const authOptions: NextAuthOptions = {
           id: existingUser.id + "",
           username: existingUser.username,
           email: existingUser.email,
+          name: existingUser.name,
+          address: existingUser.address,
         };
       },
     }),
@@ -60,6 +62,9 @@ export const authOptions: NextAuthOptions = {
           ...session.user,
           username: token.username,
           id: token.id,
+          email: token.email,
+          name: token.name,
+          address: token.address,
         },
       };
     },
