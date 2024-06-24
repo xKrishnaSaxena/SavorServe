@@ -12,12 +12,12 @@ const Navbar: React.FC<NavbarProps> = ({
   setCurrentSection,
 }) => {
   return (
-    <div className="flex justify-center space-x-4 bg-white-100 p-4">
+    <div className="flex justify-center overflow-x-auto space-x-4 bg-white-100 p-4">
       {sections.map((section) => (
         <button
           key={section}
           onClick={() => setCurrentSection(section)}
-          className={`px-4 py-2 rounded ${
+          className={`px-3 py-2 rounded-md text-sm md:text-base ${
             currentSection === section
               ? "bg-blue-500 text-white"
               : "bg-white text-gray-800"

@@ -12,9 +12,9 @@ import Sidebar from "@/components/restaurant/Sidebar";
 import { Restaurant } from "@/types/Restaurant";
 import { useState, useEffect } from "react";
 import Spinner from "@/components/ui/Spinner";
-
 import Provider from "@/components/ui/Provider";
 import AddMenu from "@/components/restaurant/AddMenu";
+import { useSession } from "next-auth/react";
 
 type Params = {
   id: string;
@@ -22,6 +22,7 @@ type Params = {
 
 const RestaurantPage = ({ params }: { params: Params }) => {
   const { id } = params;
+  const { data: session } = useSession();
 
   const [currentSection, setCurrentSection] = useState("Overview");
   const [restaurant, setRestaurant] = useState<Restaurant | null>(null);
@@ -125,11 +126,13 @@ const RestaurantPage = ({ params }: { params: Params }) => {
                 <Carousel images={restaurant.images} />
               </div>
             </div>
-            <Navbar
-              sections={sections}
-              currentSection={currentSection}
-              setCurrentSection={setCurrentSection}
-            />
+            <div className="mt-10 overflow-x-auto">
+              <Navbar
+                sections={sections}
+                currentSection={currentSection}
+                setCurrentSection={setCurrentSection}
+              />
+            </div>
             <div className="mt-10">{renderSection()}</div>
           </div>
         </div>
