@@ -1,36 +1,49 @@
-This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
+# SavorServe - Delight In Every Bite!
 
-## Getting Started
+Your gateway to delicious meals, anytime, anywhere!
+SavorServe simplifies food ordering with a seamless user experience. Sign up, log in, and explore a variety of restaurants, order with ease using cash or secure online payments powered by Stripe, and share your dining experiences through reviews. With administrative capabilities, restaurant owners can manage their menus and offerings effortlessly. Responsive and user-friendly, SavorServe ensures you enjoy your culinary adventures to the fullest.
 
-First, run the development server:
+## Features
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
+- **User Authentication:** Secure sign-up, login, and profile management powered by NextAuth.
+- **Restaurant Listings:** Discover a wide range of restaurants and cuisines.
+- **Ordering System:** Effortlessly place orders with options for cash or online payment (Stripe).
+- **Address Management:** Add and manage delivery addresses conveniently.
+- **Review System:** Share your dining experiences with reviews and ratings.
+- **Admin Dashboard:** Restaurant owners can add restaurants, manage menus, and view orders.
+- **Responsive Design:** Optimized for seamless use across desktop, tablet, and mobile platforms.
+
+## Technologies Used
+
+- **Next.js:** React framework for server-rendered applications.
+- **Tailwind CSS:** Utility-first CSS framework for styling.
+- **Prisma:** Modern database toolkit for PostgreSQL integration.
+- **PostgreSQL:** Robust open-source relational database.
+- **Vercel:** Deployment platform for Next.js applications.
+- **Stripe:** Payment processing API for secure online payments.
+- **Cloudinary:** Cloud-based image and video management service.
+
+## Setup Instructions
+
+1. Clone the repository:
+
+```
+git clone https://github.com/xKrishnaSaxena/SavorServe.git
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+2. Install dependencies for frontend and backend:
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+   - Frontend and Backend:
 
-This project uses [`next/font`](https://nextjs.org/docs/basic-features/font-optimization) to automatically optimize and load Inter, a custom Google Font.
+   ```
+    npm install --force
+   ```
 
-## Learn More
+3. Set up environment variables for Postgres connection, API keys, etc.
+4. Start the application:
 
-To learn more about Next.js, take a look at the following resources:
+```
+npm run dev
+```
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
-
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js/) - your feedback and contributions are welcome!
-
-## Deploy on Vercel
-
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/deployment) for more details.
+6. Access the application via `http://localhost:300` in your browser.
