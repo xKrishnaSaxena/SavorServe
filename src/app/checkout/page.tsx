@@ -27,12 +27,12 @@ const CheckoutForm: React.FC = () => {
   if (session?.user?.name) {
     initialname = session?.user.name;
   }
-  console.log(initialname);
+
   let initialaddress;
   if (session?.user?.address) {
     initialaddress = session?.user.address;
   }
-  console.log(initialaddress);
+
   const [name, setName] = useState(initialname);
   const [address, setAddress] = useState(initialaddress);
   const [paymentMethod, setPaymentMethod] = useState("cod");
@@ -63,20 +63,23 @@ const CheckoutForm: React.FC = () => {
     setError("");
 
     try {
-      const { clientSecret } = await fetch("/api/create-payment-intent", {
+      const data = await fetch("/api/create-payment-intent", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
         },
         body: JSON.stringify({
-          amount: cartItems.reduce((acc, item) => acc + Number(item.price), 0),
+          amount: cartItems.reduce(
+            (acc, item) => acc + Number(item.price),
+            10000
+          ),
         }),
       }).then((res) => res.json());
-
+      console.log(data);
       const cardElement = elements.getElement(CardElement);
 
       const { error: stripeError, paymentIntent } =
-        await stripe.confirmCardPayment(clientSecret, {
+        await stripe.confirmCardPayment(data.clientSecret, {
           payment_method: {
             card: cardElement!,
             billing_details: {
