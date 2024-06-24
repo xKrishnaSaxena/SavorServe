@@ -12,7 +12,7 @@ import Sidebar from "@/components/restaurant/Sidebar";
 import { Restaurant } from "@/types/Restaurant";
 import { useState, useEffect } from "react";
 import Spinner from "@/components/ui/Spinner";
-import Link from "next/link";
+
 import Provider from "@/components/ui/Provider";
 import AddMenu from "@/components/restaurant/AddMenu";
 
@@ -81,7 +81,7 @@ const RestaurantPage = ({ params }: { params: Params }) => {
       case "Add Menu": // Handle "Add Menu" section
         return (
           <div className="flex justify-center mt-6">
-            <AddMenu id={id}/>
+            <AddMenu id={id} />
           </div>
         );
       default:

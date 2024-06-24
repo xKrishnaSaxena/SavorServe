@@ -6,12 +6,12 @@ interface AddMenuProps {
   id: string; // Define the type of the id prop
 }
 
-const AddMenu:React.FC<AddMenuProps> = ({id}) => {
+const AddMenu: React.FC<AddMenuProps> = ({ id }) => {
   const { data: session } = useSession();
 
   return (
     <div>
-      {session?.user ? (
+      {session?.user?.role === "admin" ? (
         <div className="flex justify-center mt-6">
           <Link
             href={`${id}/addMenu`}
@@ -23,7 +23,7 @@ const AddMenu:React.FC<AddMenuProps> = ({id}) => {
           </Link>
         </div>
       ) : (
-        <div>Please Log in to add Menu!</div>
+        <div>Please log in as admin to add menu!</div>
       )}
     </div>
   );

@@ -8,7 +8,7 @@ const AddRestaurant = () => {
 
   return (
     <div>
-      {session?.user ? (
+      {session?.user?.role === "admin" ? (
         <div className="flex justify-center mt-6">
           <Link
             href={`/add`}
@@ -20,7 +20,7 @@ const AddRestaurant = () => {
           </Link>
         </div>
       ) : (
-        <div>Please Log in to add Restaurant!</div>
+        <div>Please log in as admin to add restaurant!</div>
       )}
     </div>
   );

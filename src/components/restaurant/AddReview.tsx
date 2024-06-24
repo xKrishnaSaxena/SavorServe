@@ -10,7 +10,7 @@ const AddReview: React.FC<AddReviewProps> = ({ id }) => {
 
   return (
     <div>
-      {session?.user ? (
+      {session?.user?.role === "customer" ? (
         <div className="flex justify-center mt-6">
           <Link href={`/${id}/addReview`}>
             <button className="bg-indigo-600 text-white py-2 px-4 rounded-md hover:bg-indigo-700">
@@ -19,7 +19,7 @@ const AddReview: React.FC<AddReviewProps> = ({ id }) => {
           </Link>
         </div>
       ) : (
-        <div>Please Log in to add Review!</div>
+        <div>Please log in as customer to add review!</div>
       )}
     </div>
   );

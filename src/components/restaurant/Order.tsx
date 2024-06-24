@@ -1,6 +1,7 @@
 import { MenuItem, Dish } from "@/types/Restaurant"; // Adjust as per your actual types
 import React from "react";
 import { useCart } from "@/contexts/CartContext"; // Adjust path as per your project structure
+import { useSession } from "next-auth/react";
 
 interface OrderProps {
   menu: MenuItem[];
@@ -8,7 +9,7 @@ interface OrderProps {
 
 const Order: React.FC<OrderProps> = ({ menu }) => {
   const { addToCart } = useCart(); // Assuming addToCart is correctly provided by CartContext
-
+  const { data: session } = useSession();
   return (
     <div className="ml-32">
       {menu.map((item, index) => (
@@ -24,12 +25,16 @@ const Order: React.FC<OrderProps> = ({ menu }) => {
                   <span className="text-lg font-semibold">{dish.name}</span>
                   <span className="text-white ml-2">(₹{dish.price})</span>
                 </div>
-                <button
-                  className="px-4 py-2 bg-indigo-600 text-white rounded-lg hover:bg-indigo-700"
-                  onClick={() => addToCart(dish)}
-                >
-                  + Add to Cart
-                </button>
+                {session?.user?.role === "customer" ? (
+                  <button
+                    className="px-4 py-2 bg-indigo-600 text-white rounded-lg hover:bg-indigo-700"
+                    onClick={() => addToCart(dish)}
+                  >
+                    + Add to Cart
+                  </button>
+                ) : (
+                  ""
+                )}
               </li>
             ))}
           </ul>
