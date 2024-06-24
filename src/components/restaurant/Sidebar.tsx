@@ -8,7 +8,7 @@ interface SidebarProps {
 
 const Sidebar: React.FC<SidebarProps> = ({ menu }) => {
   return (
-    <div className="ml-24 w-64 h-full shadow-md bg-white-100 ">
+    <div className="ml-24 w-64 h-full shadow-md bg-white-100 hidden lg-block">
       <ul>
         {menu.map((item, index) => (
           <li key={index} className="mb-4">
