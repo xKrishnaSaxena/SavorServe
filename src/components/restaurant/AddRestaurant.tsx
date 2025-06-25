@@ -20,7 +20,7 @@ const AddRestaurant = () => {
           </Link>
         </div>
       ) : (
-        <div>Please log in as admin to add restaurant!</div>
+        <div></div>
       )}
     </div>
   );

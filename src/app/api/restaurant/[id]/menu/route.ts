@@ -18,10 +18,12 @@ export async function POST(req: NextRequest) {
 
     if (existingMenu) {
       // Category already exists, add dishes to the existing category
-      const dishes = data.dishes.map((dish: { name: string; price: string }) => ({
-        name: dish.name,
-        price: dish.price,
-      }));
+      const dishes = data.dishes.map(
+        (dish: { name: string; price: string }) => ({
+          name: dish.name,
+          price: dish.price,
+        })
+      );
 
       const updatedMenu = await prisma.menu.update({
         where: { id: existingMenu.id }, // Use id to update the existing menu
@@ -38,10 +40,12 @@ export async function POST(req: NextRequest) {
       return NextResponse.json({ updatedMenu });
     } else {
       // Category does not exist, create a new menu category with dishes
-      const dishes = data.dishes.map((dish: { name: string; price: string }) => ({
-        name: dish.name,
-        price: dish.price,
-      }));
+      const dishes = data.dishes.map(
+        (dish: { name: string; price: string }) => ({
+          name: dish.name,
+          price: dish.price,
+        })
+      );
 
       const newMenu = await prisma.menu.create({
         data: {
@@ -60,6 +64,9 @@ export async function POST(req: NextRequest) {
     }
   } catch (error) {
     console.error("Error creating or updating menu:", error);
-    return NextResponse.json({ error: "Failed to create or update menu" }, { status: 500 });
+    return NextResponse.json(
+      { error: "Failed to create or update menu" },
+      { status: 500 }
+    );
   }
 }

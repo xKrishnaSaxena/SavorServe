@@ -5,7 +5,6 @@ import cloudinary from "../../../lib/cloudinary";
 export async function POST(req: NextRequest) {
   try {
     const data = await req.json();
-    console.log(data);
 
     // First, create the restaurant record
     const newRestaurant = await prisma.restaurant.create({
@@ -30,6 +29,7 @@ export async function POST(req: NextRequest) {
           .split(",")
           .map((method: string) => method.trim()),
         moreInfo: data.moreInfo.split(",").map((info: string) => info.trim()),
+        adminId: data.adminId,
       },
     });
 

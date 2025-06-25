@@ -18,6 +18,7 @@ export interface Restaurant {
   images: Image[]; // Assuming you have a one-to-many relationship between Restaurant and Image for images
   menuPhotos: Image[]; // Assuming you have a one-to-many relationship between Restaurant and Image for menu photos
   reviews: Review[]; // Assuming you have a one-to-many relationship between Restaurant and Review
+  adminId: number;
 }
 
 export interface MenuItem {
@@ -56,3 +57,19 @@ export interface User {
   address: string; // Ensure 'address' is included
   role: string;
 }
+export type RestaurantFormData = {
+  name: string;
+  rating: number;
+  diningRatings: number;
+  deliveryRating: number;
+  deliveryReviews: string;
+  cuisines: string[];
+  location: string;
+  status: string;
+  timing: string;
+  safetyMeasures: string[];
+  knownFor: string[];
+  averageCost: string;
+  paymentMethods: string[];
+  moreInfo: string[];
+};

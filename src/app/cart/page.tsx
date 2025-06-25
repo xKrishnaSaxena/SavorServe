@@ -7,14 +7,14 @@ import { useCart } from "@/contexts/CartContext";
 import { useRouter } from "next/navigation";
 
 const CartPage: React.FC = () => {
-  const { cartItems, removeFromCart, clearCart } = useCart();
+  const { cartItems, removeFromCart, clearCart, addToCart } = useCart();
   const router = useRouter();
-  // Calculate total price
+
   const totalPrice = cartItems.reduce(
-    (total, item) => total + Number(item.price),
+    (total, cartItem) =>
+      total + Number(cartItem.item.price) * cartItem.quantity,
     0
   );
-  console.log(totalPrice);
 
   return (
     <Provider>
@@ -37,47 +37,79 @@ const CartPage: React.FC = () => {
           <div className="mx-auto max-w-md py-8 mt-20">
             <h1 className="text-3xl font-semibold mb-8">Your Cart</h1>
             {cartItems.length === 0 ? (
-              <p>Your cart is empty.</p>
+              <div className="text-center py-10">
+                <p className="text-xl font-semibold text-gray-700">
+                  Your cart is empty.
+                </p>
+                <p className="text-gray-500 mt-2">
+                  Add some delicious dishes to get started!
+                </p>
+              </div>
             ) : (
               <>
-                <ul className="divide-y divide-gray-200">
-                  {cartItems.map((item, index) => (
+                <ul className="space-y-4">
+                  {cartItems.map((cartItem, index) => (
                     <li
                       key={index}
-                      className="py-4 flex items-center justify-between"
+                      className="p-4 bg-black border rounded-lg shadow-md flex items-center justify-between transition-all duration-200 hover:shadow-lg"
                     >
                       <div>
-                        <p className="text-lg font-semibold">{item.name}</p>
-                        <p className="text-gray-500">₹{item.price}</p>
+                        <p className="text-lg text-white font-semibold ">
+                          {cartItem.item.name}
+                        </p>
+                        <p className="text-gray-400">
+                          ₹{cartItem.item.price} x {cartItem.quantity} = ₹
+                          {Number(cartItem.item.price) * cartItem.quantity}
+                        </p>
                       </div>
-                      <button
-                        className="text-red-600 hover:text-red-800"
-                        onClick={() => removeFromCart(item.id)}
-                      >
-                        Remove
-                      </button>
+                      <div className="flex items-center space-x-2">
+                        <div className="flex items-center border rounded-md">
+                          <button
+                            className="px-2 py-1 bg-black text-gray-400 rounded-l-md hover:bg-gray-200"
+                            onClick={() => removeFromCart(cartItem.item.id)}
+                          >
+                            -
+                          </button>
+                          <span className="px-4 text-white">
+                            {cartItem.quantity}
+                          </span>
+                          <button
+                            className="px-2 py-1 bg-black text-gray-400 rounded-r-md hover:bg-gray-200"
+                            onClick={() => addToCart(cartItem.item, 1)}
+                          >
+                            +
+                          </button>
+                        </div>
+                        <button
+                          className="ml-4 text-red-600 hover:text-red-800 font-medium"
+                          onClick={() => removeFromCart(cartItem.item.id, true)}
+                        >
+                          Remove
+                        </button>
+                      </div>
                     </li>
                   ))}
                 </ul>
-                <div className="mt-8">
+                <div className="mt-8 bg-black p-4 rounded-lg shadow-md">
                   <div className="flex justify-between items-center mb-4">
-                    <span className="text-lg font-semibold">Total:</span>
-                    <span className="text-lg font-semibold">₹{totalPrice}</span>
+                    <span className="text-lg font-semibold text-white">
+                      Total: ₹{totalPrice}
+                    </span>
+                    <div className="space-x-4">
+                      <button
+                        className="px-4 py-2 bg-red-600 text-white rounded-md hover:bg-red-700 transition-colors duration-200"
+                        onClick={() => clearCart()}
+                      >
+                        Clear Cart
+                      </button>
+                      <button
+                        className="px-4 py-2 bg-indigo-600 text-white rounded-md hover:bg-indigo-700 transition-colors duration-200"
+                        onClick={() => router.push("/checkout")}
+                      >
+                        Proceed to Checkout
+                      </button>
+                    </div>
                   </div>
-                  <button
-                    className="px-4 py-2 bg-red-600 text-white rounded-md hover:bg-red-700 mr-4"
-                    onClick={() => clearCart()}
-                  >
-                    Clear Cart
-                  </button>
-                  <button
-                    className="px-4 py-2 bg-indigo-600 text-white rounded-md hover:bg-indigo-700"
-                    onClick={() => {
-                      router.push("/checkout");
-                    }}
-                  >
-                    Proceed to Checkout
-                  </button>
                 </div>
               </>
             )}

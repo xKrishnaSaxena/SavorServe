@@ -7,13 +7,13 @@ export default function Footer() {
             &copy; {new Date().getFullYear()} SavorServe. All rights reserved.
           </p>
           <div className="flex space-x-4">
-            <a href="#" className="hover:underline">
+            <a href="/privacypolicy" className="hover:underline">
               Privacy Policy
             </a>
-            <a href="#" className="hover:underline">
+            <a href="/tos" className="hover:underline">
               Terms of Service
             </a>
-            <a href="#" className="hover:underline">
+            <a href="/contact" className="hover:underline">
               Contact Us
             </a>
           </div>

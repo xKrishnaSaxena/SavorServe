@@ -49,7 +49,7 @@ export default function Page({ params }: { params: Params }) {
   const handleFormSubmit = async (e: React.SyntheticEvent) => {
     setLoading(true);
     e.preventDefault();
-    console.log(review);
+
     try {
       const response = await fetch(`/api/restaurant/${id}/review`, {
         method: "POST",
@@ -107,10 +107,11 @@ export default function Page({ params }: { params: Params }) {
                     type="text"
                     id="username"
                     required
+                    disabled
                     name="username"
                     value={username}
                     onChange={handleChange}
-                    className="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
+                    className="mt-1 block w-full text-white px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
                   />
                 </div>
                 <div>
@@ -127,8 +128,10 @@ export default function Page({ params }: { params: Params }) {
                     value={review.rating}
                     onChange={handleChange}
                     required
+                    min={0}
+                    max={5}
                     placeholder="Please give rating out of 5"
-                    className="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
+                    className="mt-1 block text-white w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
                   />
                 </div>
                 <div>
@@ -146,7 +149,7 @@ export default function Page({ params }: { params: Params }) {
                     value={review.type}
                     onChange={handleChange}
                     placeholder="Mention the type of the review"
-                    className="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
+                    className="mt-1 block text-white w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
                   />
                 </div>
                 <div>
@@ -164,7 +167,7 @@ export default function Page({ params }: { params: Params }) {
                     required
                     onChange={handleChange}
                     placeholder="Review here"
-                    className="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
+                    className="mt-1 block text-white w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
                   />
                 </div>
               </div>

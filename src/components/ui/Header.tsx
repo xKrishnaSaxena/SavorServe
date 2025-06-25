@@ -24,7 +24,7 @@ export default function Header() {
     <Provider>
       <header className="absolute inset-x-0 top-0 z-50">
         <nav
-          className="flex items-center justify-between p-6 lg:px-8"
+          className="flex items-center justify-between lg:px-8 border-b border-gray-700"
           aria-label="Global"
         >
           <div className="flex lg:flex-1">
@@ -42,7 +42,7 @@ export default function Header() {
           <div className="flex lg:hidden">
             <button
               type="button"
-              className="-m-2.5 inline-flex items-center justify-center rounded-md p-2.5 text-white"
+              className="-m-2.5 inline-flex items-center justify-center rounded-md p-2.5 text-white hover:text-indigo-500"
               onClick={() => setMobileMenuOpen(true)}
             >
               <span className="sr-only">Open main menu</span>
@@ -54,13 +54,13 @@ export default function Header() {
               <a
                 key={item.name}
                 href={item.href}
-                className="text-sm font-semibold leading-6 text-white"
+                className="text-sm font-semibold leading-6 text-white hover:text-indigo-500"
               >
                 {item.name}
               </a>
             ))}
           </div>
-          <div className=" lg:flex lg:flex-1 lg:justify-end">
+          <div className="lg:flex lg:flex-1 lg:justify-end">
             <Signout />
           </div>
         </nav>
@@ -74,7 +74,7 @@ export default function Header() {
             <div className="flex items-center justify-between">
               <button
                 type="button"
-                className="-m-2.5 rounded-md p-2.5 text-gray-100"
+                className="-m-2.5 rounded-md p-2.5 text-gray-100 hover:text-indigo-500"
                 onClick={() => setMobileMenuOpen(false)}
               >
                 <span className="sr-only">Close menu</span>
@@ -88,7 +88,7 @@ export default function Header() {
                     <a
                       key={item.name}
                       href={item.href}
-                      className="mt-12 mx-3 block rounded-lg px-3 py-2 text-base font-semibold leading-7 text-gray-100 hover:bg-gray-700"
+                      className="mt-12 mx-3 block rounded-lg px-3 py-2 text-base font-semibold leading-7 text-gray-100 hover:bg-gray-700 hover:text-indigo-500"
                     >
                       {item.name}
                     </a>

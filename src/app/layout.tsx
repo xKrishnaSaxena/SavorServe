@@ -1,4 +1,3 @@
-// src/app/layout.tsx
 "use client";
 import { SessionProvider } from "next-auth/react";
 import type { ReactNode } from "react";
@@ -19,12 +18,12 @@ export default function RootLayout({ children }: RootLayoutProps) {
   return (
     <html lang="en">
       <body>
-        <Toaster />
-        <Elements stripe={stripePromise}>
-          <SessionProvider>
+        <SessionProvider>
+          <Toaster />
+          <Elements stripe={stripePromise}>
             <CartProvider>{children}</CartProvider>
-          </SessionProvider>
-        </Elements>
+          </Elements>
+        </SessionProvider>
       </body>
     </html>
   );

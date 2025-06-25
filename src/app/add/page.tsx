@@ -8,11 +8,15 @@ import { useToast } from "@/components/ui/use-toast";
 import { ToastAction } from "@/components/ui/toast";
 import { useRouter } from "next/navigation";
 import Spinner from "@/components/ui/Spinner";
+import { useSession } from "next-auth/react";
 
 export default function AddRestaurant() {
   const { toast } = useToast();
   const [loading, setLoading] = useState(false);
   const router = useRouter();
+  const { data: session } = useSession();
+  if (!session || !session.user) return <Spinner />;
+  const id = parseInt(session.user.id);
   const [restaurant, setRestaurant] = useState({
     name: "",
     rating: 5,
@@ -28,8 +32,9 @@ export default function AddRestaurant() {
     averageCost: "",
     paymentMethods: "",
     moreInfo: "",
-    images: [] as string[], // Image URLs or base64 strings
-    menuPhotos: [] as string[], // Image URLs or base64 strings
+    images: [] as string[],
+    menuPhotos: [] as string[],
+    adminId: id,
   });
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -66,7 +71,7 @@ export default function AddRestaurant() {
   const handleSubmit = async (e: React.SyntheticEvent) => {
     setLoading(true);
     e.preventDefault();
-    console.log(restaurant);
+
     try {
       const response = await fetch("/api/restaurant", {
         method: "POST",
@@ -137,7 +142,7 @@ export default function AddRestaurant() {
                       name="name"
                       value={restaurant.name}
                       onChange={handleChange}
-                      className="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
+                      className="mt-1 block text-white w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
                     />
                   </div>
 
@@ -155,7 +160,7 @@ export default function AddRestaurant() {
                       required
                       value={restaurant.cuisines}
                       onChange={handleChange}
-                      className="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
+                      className="mt-1 block w-full text-white px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
                     />
                   </div>
                   <div>
@@ -172,7 +177,7 @@ export default function AddRestaurant() {
                       required
                       value={restaurant.location}
                       onChange={handleChange}
-                      className="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
+                      className="mt-1 block w-full text-white px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
                     />
                   </div>
                   <div>
@@ -189,7 +194,7 @@ export default function AddRestaurant() {
                       name="status"
                       value={restaurant.status}
                       onChange={handleChange}
-                      className="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
+                      className="mt-1 block w-full text-white px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
                     />
                   </div>
                   <div>
@@ -206,7 +211,7 @@ export default function AddRestaurant() {
                       required
                       value={restaurant.timing}
                       onChange={handleChange}
-                      className="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
+                      className="mt-1 block w-full text-white px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
                     />
                   </div>
                   <div>
@@ -223,7 +228,7 @@ export default function AddRestaurant() {
                       required
                       value={restaurant.safetyMeasures}
                       onChange={handleChange}
-                      className="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
+                      className="mt-1 block w-full text-white px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
                     />
                   </div>
 
@@ -241,7 +246,7 @@ export default function AddRestaurant() {
                       required
                       value={restaurant.knownFor}
                       onChange={handleChange}
-                      className="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
+                      className="mt-1 block w-full text-white px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
                     />
                   </div>
                   <div>
@@ -258,7 +263,7 @@ export default function AddRestaurant() {
                       name="averageCost"
                       value={restaurant.averageCost}
                       onChange={handleChange}
-                      className="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
+                      className="mt-1 block w-full text-white px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
                     />
                   </div>
                   <div>
@@ -275,7 +280,7 @@ export default function AddRestaurant() {
                       name="paymentMethods"
                       value={restaurant.paymentMethods}
                       onChange={handleChange}
-                      className="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
+                      className="mt-1 block w-full text-white px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
                     />
                   </div>
                   <div>
@@ -292,7 +297,7 @@ export default function AddRestaurant() {
                       required
                       value={restaurant.moreInfo}
                       onChange={handleChange}
-                      className="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
+                      className="mt-1 block w-full text-white px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
                     />
                   </div>
                   <div>
@@ -310,7 +315,7 @@ export default function AddRestaurant() {
                       required
                       accept="image/*"
                       onChange={(e) => handleImageChange(e, "images")}
-                      className="mt-1 block w-full px-3 py-2 border text-white border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
+                      className="mt-1 block w-full px-3 py-2 border text-white border-gray-300  rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
                     />
                   </div>
                   <div>

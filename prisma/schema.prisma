@@ -29,6 +29,8 @@ model Restaurant {
   images          RestaurantImage[]
   menuPhotos      MenuPhoto[]
   reviews         Review[]
+  adminId         Int             @map("admin_id")
+  admin           User            @relation("RestaurantAdmin", fields: [adminId], references: [id])
 }
 
 model Menu {
@@ -44,7 +46,7 @@ model Dish {
   name     String
   price    String
   menuId   Int
-  menu     Menu   @relation(fields: [menuId], references: [id])
+  menu     Menu   @relation(fields: [menuId], references: [id], onDelete: Cascade)
 }
 
 model User {
@@ -58,6 +60,7 @@ model User {
   userReviews  Int        @default(0)
   userFollowers Int       @default(0)
   reviews      Review[]
+  managedRestaurants Restaurant[]     @relation("RestaurantAdmin")
 }
 
 model Review {

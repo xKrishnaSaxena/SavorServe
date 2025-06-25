@@ -41,8 +41,18 @@ const CheckoutForm: React.FC = () => {
   const [success, setSuccess] = useState(false);
   const { cartItems, clearCart } = useCart();
 
+  const totalAmount = cartItems.reduce(
+    (acc, cartItem) => acc + Number(cartItem.item.price) * cartItem.quantity,
+    0
+  );
+
   const handleSubmit = async (event: React.FormEvent) => {
     event.preventDefault();
+
+    if (!name || !address) {
+      setError("Please provide name and address.");
+      return;
+    }
 
     if (paymentMethod === "cod") {
       setLoading(true);
@@ -50,8 +60,7 @@ const CheckoutForm: React.FC = () => {
         setSuccess(true);
         clearCart();
         setLoading(false);
-      }, 3000); // Assuming 3 seconds for processing COD
-
+      }, 3000); // Simulate COD processing
       return;
     }
 
@@ -69,13 +78,10 @@ const CheckoutForm: React.FC = () => {
           "Content-Type": "application/json",
         },
         body: JSON.stringify({
-          amount: cartItems.reduce(
-            (acc, item) => acc + Number(item.price),
-            10000
-          ),
+          amount: totalAmount,
         }),
       }).then((res) => res.json());
-      console.log(data);
+
       const cardElement = elements.getElement(CardElement);
 
       const { error: stripeError, paymentIntent } =
@@ -99,136 +105,152 @@ const CheckoutForm: React.FC = () => {
         clearCart();
         setLoading(false);
       }
-    } catch (error) {
+    } catch (err) {
       setError("Failed to process payment");
       setLoading(false);
-      console.error("Error processing payment:", error);
+      console.error("Error processing payment:", err);
     }
   };
+
   if (!session) {
     return <Spinner />;
   }
 
   return (
-    <form onSubmit={handleSubmit}>
+    <form onSubmit={handleSubmit} className="space-y-6">
       <div>
-        <h2 className="text-2xl font-semibold mb-4">Checkout</h2>
-        <div className="mb-4">
-          <label
-            htmlFor="name"
-            className="block text-sm font-medium text-white"
-          >
-            Name
-          </label>
-          <input
-            type="text"
-            id="name"
-            value={initialname}
-            onChange={(e) => setName(e.target.value)}
-            className="mt-1 block w-full px-3 text-black py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
-          />
-        </div>
-        <div className="mb-4">
-          <label
-            htmlFor="address"
-            className="block text-sm font-medium text-white"
-          >
-            Address
-          </label>
-          <input
-            type="text"
-            id="address"
-            value={initialaddress}
-            onChange={(e) => setAddress(e.target.value)}
-            className="mt-1 block w-full px-3 text-black py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
-          />
-        </div>
-        <div className="mb-4">
-          <h3 className="text-lg font-semibold">Items</h3>
-          <ul>
-            {cartItems.map((item, index) => (
-              <li key={index} className="flex justify-between py-2">
-                <span>{item.name}</span>
-                <span>₹{item.price}</span>
-              </li>
-            ))}
-          </ul>
-          <p className="mt-4 text-lg font-bold">
-            Total: ₹
-            {cartItems.reduce((total, item) => total + Number(item.price), 0)}
-          </p>
-        </div>
-        <div className="mb-4">
-          <h3 className="text-lg font-semibold">Payment Method</h3>
+        <div className=" p-6 rounded-lg shadow-md space-y-4">
           <div>
-            <label className="inline-flex items-center">
-              <input
-                type="radio"
-                className="form-radio"
-                name="paymentMethod"
-                value="cod"
-                checked={paymentMethod === "cod"}
-                onChange={() => setPaymentMethod("cod")}
-              />
-              <span className="ml-2">Cash on Delivery</span>
+            <label
+              htmlFor="name"
+              className="block text-sm font-medium text-white"
+            >
+              Name
             </label>
+            <input
+              type="text"
+              id="name"
+              value={name}
+              onChange={(e) => setName(e.target.value)}
+              className="mt-1 block w-full px-3 text-white py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
+              required
+              disabled
+            />
           </div>
           <div>
-            <label className="inline-flex items-center">
-              <input
-                type="radio"
-                className="form-radio"
-                name="paymentMethod"
-                value="online"
-                checked={paymentMethod === "online"}
-                onChange={() => setPaymentMethod("online")}
-              />
-              <span className="ml-2">Online Payment</span>
+            <label
+              htmlFor="address"
+              className="block text-sm font-medium text-white"
+            >
+              Address
             </label>
+            <input
+              type="text"
+              id="address"
+              value={address}
+              onChange={(e) => setAddress(e.target.value)}
+              className="mt-1 block w-full px-3 text-white py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
+              required
+            />
           </div>
+        </div>
+      </div>
+      <div className="p-6 rounded-lg shadow-md">
+        <h3 className="text-lg font-semibold text-white mb-4">Order Summary</h3>
+        <div className="space-y-4">
+          {cartItems.map((cartItem, index) => (
+            <div
+              key={index}
+              className="flex justify-between items-center border-b pb-2"
+            >
+              <div>
+                <p className="text-white font-medium">{cartItem.item.name}</p>
+                <p className="text-white">
+                  ₹{cartItem.item.price} x {cartItem.quantity}
+                </p>
+              </div>
+              <p className="text-white font-medium">
+                ₹{Number(cartItem.item.price) * cartItem.quantity}
+              </p>
+            </div>
+          ))}
+          <div className="flex justify-between items-center pt-4 border-t">
+            <p className="text-lg font-bold text-white">Total</p>
+            <p className="text-lg font-bold text-white">₹{totalAmount}</p>
+          </div>
+        </div>
+      </div>
+      <div className="bg-black p-6 rounded-lg shadow-md">
+        <h3 className="text-lg font-semibold text-white mb-4">
+          Payment Method
+        </h3>
+        <div className="space-y-2">
+          <label className="flex items-center space-x-2">
+            <input
+              type="radio"
+              name="paymentMethod"
+              value="cod"
+              checked={paymentMethod === "cod"}
+              onChange={() => setPaymentMethod("cod")}
+              className="form-radio h-4 w-4 text-white"
+            />
+            <span className="text-white">Cash on Delivery</span>
+          </label>
+          <label className="flex items-center space-x-2">
+            <input
+              type="radio"
+              name="paymentMethod"
+              value="online"
+              checked={paymentMethod === "online"}
+              onChange={() => setPaymentMethod("online")}
+              className="form-radio h-4 w-4 text-white"
+            />
+            <span className="text-white">Online Payment</span>
+          </label>
         </div>
         {paymentMethod === "online" && (
-          <div className="mb-4">
-            <label className="block text-sm font-medium text-white">
+          <div className="mt-4">
+            <label className="block text-sm font-medium text-white mb-2">
               Card Details
             </label>
             <CardElement
-              className="mt-1 block w-full px-3 py-2 text-black border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
+              className="p-3 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 text-black"
               options={{
                 style: {
                   base: {
-                    color: "#fff",
+                    fontSize: "16px",
+                    color: "#424770",
                     "::placeholder": {
                       color: "#aab7c4",
                     },
                   },
                   invalid: {
-                    color: "#ff0000",
+                    color: "#9e2146",
                   },
                 },
               }}
             />
           </div>
         )}
-        {error && <p className="text-red-600">{error}</p>}
-        {success ? (
-          <p className="text-green-600 mt-4">
-            Payment successful! Thank you for your order.
-          </p>
-        ) : loading ? (
-          <p className="mt-4 px-4 py-2 bg-indigo-600 text-white rounded-md">
-            Processing...
-          </p>
-        ) : (
-          <button
-            type="submit"
-            className={`mt-4 px-4 py-2 bg-indigo-600 text-white rounded-md hover:bg-indigo-700`}
-            disabled={!stripe || loading}
-          >
-            Place Order
-          </button>
-        )}
       </div>
+      {error && <p className="text-red-600 mt-4">{error}</p>}
+      {success ? (
+        <p className="text-green-600 mt-4">
+          Payment successful! Thank you for your order.
+        </p>
+      ) : loading ? (
+        <p className="mt-4 px-4 py-2 bg-indigo-600 text-white rounded-md">
+          Processing...
+        </p>
+      ) : (
+        <button
+          type="submit"
+          className="mt-4 px-4 py-2 bg-indigo-600 text-white rounded-md hover:bg-indigo-700 transition-colors duration-200"
+          disabled={!stripe && paymentMethod === "online"}
+        >
+          Place Order
+        </button>
+      )}
     </form>
   );
 };
@@ -251,9 +273,8 @@ const CheckoutPage: React.FC = () => {
               }}
             />
           </div>
-
-          <div className="mx-auto max-w-md py-8 mt-32">
-            <h1 className="text-3xl font-semibold mb-8">Checkout</h1>
+          <div className="mx-auto max-w-2xl py-8 mt-20">
+            <h1 className="text-3xl font-bold text-white mb-8">Checkout</h1>
             <Elements stripe={stripePromise}>
               <CheckoutForm />
             </Elements>

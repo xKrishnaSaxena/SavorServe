@@ -19,7 +19,7 @@ const AddReview: React.FC<AddReviewProps> = ({ id }) => {
           </Link>
         </div>
       ) : (
-        <div>Please log in as customer to add review!</div>
+        <div>Please log in to add review!</div>
       )}
     </div>
   );

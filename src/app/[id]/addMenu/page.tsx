@@ -63,7 +63,7 @@ export default function Page({ params }: { params: Params }) {
   const handleFormSubmit = async (e: React.SyntheticEvent) => {
     setLoading(true);
     e.preventDefault();
-    console.log(category);
+
     try {
       const response = await fetch(`/api/restaurant/${id}/menu`, {
         method: "POST",
@@ -126,7 +126,7 @@ export default function Page({ params }: { params: Params }) {
                       required
                       value={category.category}
                       onChange={handleChange}
-                      className="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
+                      className="mt-1 block w-full text-white px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
                     />
                   </div>
                   {category.dishes.map((dish, index) => (
@@ -144,7 +144,7 @@ export default function Page({ params }: { params: Params }) {
                         required
                         value={dish.name}
                         onChange={(e) => handleDishChange(e, index, "name")}
-                        className="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
+                        className="mt-1 block text-white  w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
                       />
                       <label
                         htmlFor={`dish-price-${index}`}
@@ -160,7 +160,7 @@ export default function Page({ params }: { params: Params }) {
                         placeholder="In Rupees"
                         value={dish.price}
                         onChange={(e) => handleDishChange(e, index, "price")}
-                        className="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
+                        className="mt-1 block text-white  w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
                       />
                     </div>
                   ))}
